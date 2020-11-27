@@ -16,5 +16,6 @@ private:
 	QString m_apiKey;	//注册的apikey
 	QString m_secretKey;	//注册的secretKey
 	QString m_token;	//请求Baidu.AI返回的token值
+	QString m_userId;	//用户Id
 	double m_dThresholdValue;	//人脸识别的阈值
 };
