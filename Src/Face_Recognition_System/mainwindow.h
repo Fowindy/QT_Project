@@ -21,6 +21,7 @@ private:
 	KaoQin *mKaoQin;
 
 private slots:
-	void on_bExit_clicked();	//退出按钮
+	void on_btnExit_clicked();	//退出按钮
+	void on_btnCheckInRecord_clicked();	//考勤记录按钮
 };
 #endif // MAINWINDOW_H

@@ -57,17 +57,17 @@ public:
     QSpacerItem *horizontalSpacer_4;
     QLineEdit *kq_post;
     QTextBrowser *cameraWindow;
-    QPushButton *buttonCheckIn;
-    QPushButton *buttonCollection;
-    QPushButton *buttonOpenCam;
-    QWidget *widget;
+    QPushButton *btnCheckIn;
+    QPushButton *btnWorkerInfoCaptured;
+    QPushButton *btnOpenCam;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_6;
     QSpacerItem *horizontalSpacer_5;
-    QPushButton *kaoqin;
+    QPushButton *btnCheckInRecord;
     QSpacerItem *horizontalSpacer_6;
-    QPushButton *teacher;
+    QPushButton *btnAdminLogin;
     QSpacerItem *horizontalSpacer_7;
-    QPushButton *quit;
+    QPushButton *btnExit;
     QSpacerItem *horizontalSpacer_8;
     QWidget *tab_2;
     QWidget *tab_3;
@@ -194,47 +194,47 @@ public:
         cameraWindow = new QTextBrowser(tab);
         cameraWindow->setObjectName(QString::fromUtf8("cameraWindow"));
         cameraWindow->setGeometry(QRect(270, 40, 361, 391));
-        buttonCheckIn = new QPushButton(tab);
-        buttonCheckIn->setObjectName(QString::fromUtf8("buttonCheckIn"));
-        buttonCheckIn->setGeometry(QRect(10, 40, 141, 23));
-        buttonCollection = new QPushButton(tab);
-        buttonCollection->setObjectName(QString::fromUtf8("buttonCollection"));
-        buttonCollection->setGeometry(QRect(660, 40, 91, 31));
-        buttonOpenCam = new QPushButton(tab);
-        buttonOpenCam->setObjectName(QString::fromUtf8("buttonOpenCam"));
-        buttonOpenCam->setGeometry(QRect(660, 120, 91, 23));
-        widget = new QWidget(tab);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(110, 450, 661, 25));
-        horizontalLayout_6 = new QHBoxLayout(widget);
+        btnCheckIn = new QPushButton(tab);
+        btnCheckIn->setObjectName(QString::fromUtf8("btnCheckIn"));
+        btnCheckIn->setGeometry(QRect(10, 40, 141, 23));
+        btnWorkerInfoCaptured = new QPushButton(tab);
+        btnWorkerInfoCaptured->setObjectName(QString::fromUtf8("btnWorkerInfoCaptured"));
+        btnWorkerInfoCaptured->setGeometry(QRect(660, 40, 91, 31));
+        btnOpenCam = new QPushButton(tab);
+        btnOpenCam->setObjectName(QString::fromUtf8("btnOpenCam"));
+        btnOpenCam->setGeometry(QRect(660, 120, 91, 23));
+        layoutWidget = new QWidget(tab);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(110, 450, 661, 25));
+        horizontalLayout_6 = new QHBoxLayout(layoutWidget);
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
         horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_6->addItem(horizontalSpacer_5);
 
-        kaoqin = new QPushButton(widget);
-        kaoqin->setObjectName(QString::fromUtf8("kaoqin"));
+        btnCheckInRecord = new QPushButton(layoutWidget);
+        btnCheckInRecord->setObjectName(QString::fromUtf8("btnCheckInRecord"));
 
-        horizontalLayout_6->addWidget(kaoqin);
+        horizontalLayout_6->addWidget(btnCheckInRecord);
 
         horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_6->addItem(horizontalSpacer_6);
 
-        teacher = new QPushButton(widget);
-        teacher->setObjectName(QString::fromUtf8("teacher"));
+        btnAdminLogin = new QPushButton(layoutWidget);
+        btnAdminLogin->setObjectName(QString::fromUtf8("btnAdminLogin"));
 
-        horizontalLayout_6->addWidget(teacher);
+        horizontalLayout_6->addWidget(btnAdminLogin);
 
         horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_6->addItem(horizontalSpacer_7);
 
-        quit = new QPushButton(widget);
-        quit->setObjectName(QString::fromUtf8("quit"));
+        btnExit = new QPushButton(layoutWidget);
+        btnExit->setObjectName(QString::fromUtf8("btnExit"));
 
-        horizontalLayout_6->addWidget(quit);
+        horizontalLayout_6->addWidget(btnExit);
 
         horizontalSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -277,12 +277,12 @@ public:
         label_5->setText(QCoreApplication::translate("MainWindow", "\345\267\245\345\217\267:", nullptr));
         label_8->setText(QCoreApplication::translate("MainWindow", "\351\203\250\351\227\250:", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "\350\201\214\344\275\215:", nullptr));
-        buttonCheckIn->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\346\211\223\345\215\241", nullptr));
-        buttonCollection->setText(QCoreApplication::translate("MainWindow", "\345\221\230\345\267\245\344\277\241\346\201\257\351\207\207\351\233\206", nullptr));
-        buttonOpenCam->setText(QCoreApplication::translate("MainWindow", "\346\211\223\345\274\200\346\221\204\345\203\217\345\244\264", nullptr));
-        kaoqin->setText(QCoreApplication::translate("MainWindow", "\350\200\203\345\213\244\350\256\260\345\275\225", nullptr));
-        teacher->setText(QCoreApplication::translate("MainWindow", "\346\225\231\345\270\210\347\231\273\345\275\225", nullptr));
-        quit->setText(QCoreApplication::translate("MainWindow", "\351\200\200\345\207\272", nullptr));
+        btnCheckIn->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\346\211\223\345\215\241", nullptr));
+        btnWorkerInfoCaptured->setText(QCoreApplication::translate("MainWindow", "\345\221\230\345\267\245\344\277\241\346\201\257\351\207\207\351\233\206", nullptr));
+        btnOpenCam->setText(QCoreApplication::translate("MainWindow", "\346\211\223\345\274\200\346\221\204\345\203\217\345\244\264", nullptr));
+        btnCheckInRecord->setText(QCoreApplication::translate("MainWindow", "\350\200\203\345\213\244\350\256\260\345\275\225", nullptr));
+        btnAdminLogin->setText(QCoreApplication::translate("MainWindow", "\346\225\231\345\270\210\347\231\273\345\275\225", nullptr));
+        btnExit->setText(QCoreApplication::translate("MainWindow", "\351\200\200\345\207\272", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "\344\272\272\350\204\270\350\200\203\345\213\244\347\263\273\347\273\237", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "\351\242\234\345\200\274\350\257\204\345\210\206\347\263\273\347\273\237", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "\344\272\272\350\204\270\346\257\224\345\257\271\347\263\273\347\273\237", nullptr));

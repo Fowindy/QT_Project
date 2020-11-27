@@ -224,7 +224,7 @@
          <string>一键打卡</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="bWorkerInfoCaptured">
+       <widget class="QPushButton" name="btnWorkerInfoCaptured">
         <property name="geometry">
          <rect>
           <x>660</x>
@@ -237,7 +237,7 @@
          <string>员工信息采集</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonOpenCam">
+       <widget class="QPushButton" name="btnOpenCam">
         <property name="geometry">
          <rect>
           <x>660</x>
@@ -274,7 +274,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="bCheckInRecord">
+          <widget class="QPushButton" name="btnCheckInRecord">
            <property name="text">
             <string>考勤记录</string>
            </property>
@@ -294,7 +294,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="bAdminLogin">
+          <widget class="QPushButton" name="btnAdminLogin">
            <property name="text">
             <string>教师登录</string>
            </property>
@@ -314,7 +314,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="bExit">
+          <widget class="QPushButton" name="btnExit">
            <property name="text">
             <string>退出</string>
            </property>

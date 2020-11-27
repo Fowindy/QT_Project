@@ -14,6 +14,8 @@ public:
 signals:
 	//考勤信号
 	void KaoQinSignal();
+private slots:
+	void on_btnReturn_clicked();
 
 private:
 	Ui::KaoQin *ui;

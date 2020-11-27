@@ -26,8 +26,24 @@ MainWindow::~MainWindow()
 *@Created:   2020/11/27 17:20
 *@Describe:	 退出程序按钮函数实现
 *************************************/
-void MainWindow::on_bExit_clicked()
+void MainWindow::on_btnExit_clicked()
 {
 	this->close();
+}
+
+/************************************
+*@Method:    on_btnCheckIn_clicked
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/11/27 21:17
+*@Describe:	 考勤记录按钮函数实现
+*************************************/
+void MainWindow::on_btnCheckInRecord_clicked()
+{
+	//隐藏首页
+	this->hide();
+	//显示考勤页
+	mKaoQin->show();
 }
 
