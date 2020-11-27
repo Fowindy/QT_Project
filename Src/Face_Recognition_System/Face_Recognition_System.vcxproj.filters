@@ -43,12 +43,18 @@
     <ClCompile Include="KaoQin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FaceRecognition_Qt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="KaoQin.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="FaceRecognition_Qt.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

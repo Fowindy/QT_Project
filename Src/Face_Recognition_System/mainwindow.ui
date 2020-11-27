@@ -296,7 +296,7 @@
          <item>
           <widget class="QPushButton" name="btnAdminLogin">
            <property name="text">
-            <string>教师登录</string>
+            <string>管理员登录</string>
            </property>
           </widget>
          </item>

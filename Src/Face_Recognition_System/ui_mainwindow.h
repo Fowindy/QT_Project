@@ -281,7 +281,7 @@ public:
         btnWorkerInfoCaptured->setText(QCoreApplication::translate("MainWindow", "\345\221\230\345\267\245\344\277\241\346\201\257\351\207\207\351\233\206", nullptr));
         btnOpenCam->setText(QCoreApplication::translate("MainWindow", "\346\211\223\345\274\200\346\221\204\345\203\217\345\244\264", nullptr));
         btnCheckInRecord->setText(QCoreApplication::translate("MainWindow", "\350\200\203\345\213\244\350\256\260\345\275\225", nullptr));
-        btnAdminLogin->setText(QCoreApplication::translate("MainWindow", "\346\225\231\345\270\210\347\231\273\345\275\225", nullptr));
+        btnAdminLogin->setText(QCoreApplication::translate("MainWindow", "\347\256\241\347\220\206\345\221\230\347\231\273\345\275\225", nullptr));
         btnExit->setText(QCoreApplication::translate("MainWindow", "\351\200\200\345\207\272", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "\344\272\272\350\204\270\350\200\203\345\213\244\347\263\273\347\273\237", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "\351\242\234\345\200\274\350\257\204\345\210\206\347\263\273\347\273\237", nullptr));
