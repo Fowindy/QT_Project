@@ -1,5 +1,6 @@
 ﻿#pragma execution_character_set("utf-8")
 #include "FaceRecognition_Qt.h"
+#include <QUrl>
 
 /************************************
 *@Method:    FaceRecognition_Qt
@@ -28,6 +29,8 @@ FaceRecognition_Qt::FaceRecognition_Qt(const QString &apiKey, const QString &sec
 *************************************/
 bool FaceRecognition_Qt::RegisterMember(QString qStrImage, QString userId)
 {
+	//拼接人脸注册Api的url
+	QUrl url("https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/add?access_token=" + m_token);
 }
 
 FaceRecognition_Qt::~FaceRecognition_Qt()
