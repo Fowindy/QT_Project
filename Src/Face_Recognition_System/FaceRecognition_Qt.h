@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <QObject>
+#include "NetJson_Qt.h"
 
 class FaceRecognition_Qt : public QObject
 {
@@ -18,4 +19,5 @@ private:
 	QString m_token;	//请求Baidu.AI返回的token值
 	QString m_userId;	//用户Id
 	double m_dThresholdValue;	//人脸识别的阈值
+	NetJson_Qt::HTTP m_http;	//http网络对象
 };

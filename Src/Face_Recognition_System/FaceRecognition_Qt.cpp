@@ -3,6 +3,7 @@
 #include <QUrl>
 #include <QNetworkRequest>
 #include <QJsonObject>
+#include <QJsonDocument>
 
 /************************************
 *@Method:    FaceRecognition_Qt
@@ -47,8 +48,19 @@ bool FaceRecognition_Qt::RegisterMember(QString qStrImage, QString userId)
 	append["face_token"] = m_token;	//人脸图片唯一标识
 	//创建字符数组用于接收结果
 	QByteArray buf;
-	//查询语句
-	return true;
+	//http对象发送请求
+	m_http.post(request, QJsonDocument(append).toJson(), buf, 10000);
+	//将接收的buf转换为QJsonObject
+	QJsonObject acceptedData(QJsonDocument::fromJson(buf).object());
+	//判断反馈信息_反馈失败的情况
+	if (buf.isEmpty() || acceptedData.isEmpty() || !acceptedData.contains("result"))
+	{
+		return false;
+	}
+	else	//反馈成功
+	{
+		return true;
+	}
 }
 
 FaceRecognition_Qt::~FaceRecognition_Qt()
