@@ -191,6 +191,7 @@
     <ClCompile Include="KaoQin.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="NetJson_Qt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainwindow.h">
@@ -209,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="FaceRecognition_Qt.h" />
+    <QtMoc Include="NetJson_Qt.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

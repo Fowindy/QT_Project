@@ -46,6 +46,9 @@
     <ClCompile Include="FaceRecognition_Qt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NetJson_Qt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainwindow.h">
@@ -55,6 +58,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="FaceRecognition_Qt.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="NetJson_Qt.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
