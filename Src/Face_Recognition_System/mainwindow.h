@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include "KaoQin.h"
 #include "FaceRecognition_Qt.h"
-#include "jasonqt_face.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,7 +20,7 @@ public:
 private:
 	Ui::MainWindow *ui;
 	KaoQin *mKaoQin;	//考勤对象
-	/*JasonQt_Face*/FaceRecognition_Qt *m_Face;	//人脸识别接口对象
+	FaceRecognition_Qt *m_Face;	//人脸识别接口对象
 
 private slots:
 	void on_btnExit_clicked();	//退出按钮
