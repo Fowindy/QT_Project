@@ -1,6 +1,8 @@
 ﻿#pragma execution_character_set("utf-8")
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "jasonqt_face.h"
+#include "FaceRecognition_Qt.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -11,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 	mKaoQin = new KaoQin();
 	//KaoQin对象连接信号和槽_KaoQin页面返回按钮显示首页
 	connect(mKaoQin, SIGNAL(KaoQinSignal()), this, SLOT(show()));
+	m_Face = new FaceRecognition_Qt("VB5zp8jnFjLf6wjLtw4lbnme", "ohlu3eO12VMs1qKT8MiSGxb3hShmUyfj");
+	m_Face->refreshToken();
 }
 
 MainWindow::~MainWindow()

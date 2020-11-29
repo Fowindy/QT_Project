@@ -40,7 +40,7 @@ bool FaceRecognition_Qt::RegisterMember(QString qStrImage, QString userId)
 	QJsonObject append;
 	m_userId = userId;
 	//设置请求头_要根据Api的接口定义类型来对应
-	request.setRawHeader("Content-Type", "aspplication/json");
+	request.setRawHeader("Content-Type", "application/json");
 	append["image"] = qStrImage;	//图片字符串码
 	append["image_type"] = "BASE64";	//图像编码
 	append["group_id"] = "A";	//用户组id_默认A组
@@ -65,4 +65,31 @@ bool FaceRecognition_Qt::RegisterMember(QString qStrImage, QString userId)
 
 FaceRecognition_Qt::~FaceRecognition_Qt()
 {
+}
+
+/************************************
+*@Method:    refreshToken
+*@Access:    public
+*@Returns:   bool
+*@Author: 	  Fowindy
+*@Parameter: void
+*@Created:   2020/11/29 10:37
+*@Describe:	 刷新获取Token
+*************************************/
+bool FaceRecognition_Qt::refreshToken(void)
+{
+	QNetworkRequest request(QUrl(QString("https://aip.baidubce.com/oauth/2.0/token?")));
+	QByteArray append = QString("grant_type=client_credentials&client_id=%1&client_secret=%2").arg(m_apiKey).arg(m_secretKey).toUtf8();
+	QByteArray buf;
+
+	request.setRawHeader("Content-Type", "application/json");
+	//超时为15000ms
+	const auto &flag = m_http.post(request, append, buf, 15000);
+	if (!flag) { return false; }
+
+	const auto &data = QJsonDocument::fromJson(buf).object();
+	if (data.isEmpty() || !data.contains("access_token")) { return false; }
+
+	m_token = data["access_token"].toString();
+	return true;
 }

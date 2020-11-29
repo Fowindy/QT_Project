@@ -1,7 +1,7 @@
-﻿#include "NetJson_Qt.h"
+﻿#pragma execution_character_set("utf-8")
+#include "NetJson_Qt.h"
 using namespace NetJson_Qt;
-#include <QHostInfo>
-#include <QEventLoop>
+
 /************************************
 *@Method:    HTTP
 *@Access:    public
@@ -12,7 +12,7 @@ using namespace NetJson_Qt;
 *************************************/
 HTTP::HTTP()
 {
-	connect(&m_manager, SIGNAL(Finished(QNetworkReply*)), this, SLOT(onFinished(QNetworkReply*)));
+	connect(&m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFinished(QNetworkReply*)));
 	connect(&m_timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 	m_timer.setSingleShot(true);
 }
@@ -164,12 +164,21 @@ void NetJson_Qt::HTTP::onFinished(QNetworkReply *reply)
 *@Created:   2020/11/28 1:46
 *@Describe:	 onTimeout超时相应函数
 *************************************/
-void NetJson_Qt::HTTP::onTimeout()
+void HTTP::onTimeout()
 {
 	if (m_reply)
 	{
 		this->stop();
 		emit error(QNetworkReply::TimeoutError);
+	}
+}
+
+void HTTP::onError(const QNetworkReply::NetworkError &error_)
+{
+	if (m_reply)
+	{
+		this->stop();
+		emit error(error_);
 	}
 }
 
@@ -185,7 +194,7 @@ void NetJson_Qt::HTTP::onTimeout()
 *@Created:   2020/11/28 9:41
 *@Describe:	 get获取http
 *************************************/
-bool NetJson_Qt::HTTP::post(const QNetworkRequest &networkRequest, const QByteArray &append, QByteArray &target, const int &maxTime /*= 30000*/)
+bool HTTP::post(const QNetworkRequest &networkRequest, const QByteArray &append, QByteArray &target, const int &maxTime /*= 30000*/)
 {
 	QEventLoop eventLoop;
 
@@ -219,11 +228,12 @@ bool NetJson_Qt::HTTP::post(const QNetworkRequest &networkRequest, const QByteAr
 *@Created:   2020/11/28 0:57
 *@Describe:	 获取本地ip
 *************************************/
-QNetworkAddressEntry NetJson_Qt::getNetworkAddressEntry()
+QNetworkAddressEntry NetJson_Qt::getNetworkAddressEntry(void)
 {
 	auto allInterfaces = QNetworkInterface::allInterfaces();
-	//浏览第一个接口
-	for (const auto &interface :allInterfaces)
+
+	// Scan en0
+	for (const auto &interface : allInterfaces)
 	{
 		if (interface.name().indexOf("en0") != -1)
 		{
@@ -237,14 +247,14 @@ QNetworkAddressEntry NetJson_Qt::getNetworkAddressEntry()
 		}
 	}
 
-	//浏览其他接口
-	for (const auto &interface :allInterfaces)
+	// Scan other
+	for (const auto &interface : allInterfaces)
 	{
 		for (const auto &entry : interface.addressEntries())
 		{
 			if (entry.ip().toIPv4Address())
 			{
-				if (entry.ip().toString().indexOf("10.0") == 0)
+				if (entry.ip().toString().indexOf("10.0.") == 0)
 				{
 					return entry;
 				}
@@ -255,6 +265,7 @@ QNetworkAddressEntry NetJson_Qt::getNetworkAddressEntry()
 			}
 		}
 	}
+
 	return QNetworkAddressEntry();
 }
 
@@ -267,7 +278,7 @@ QNetworkAddressEntry NetJson_Qt::getNetworkAddressEntry()
 *@Created:   2020/11/28 1:08
 *@Describe:	 获取本地host
 *************************************/
-QString NetJson_Qt::getDeviceName()
+QString NetJson_Qt::getDeviceName(void)
 {
 #ifdef Q_OS_MAC	//mac系统
 	return QHostInfo::localHostName().replace(".local", "");

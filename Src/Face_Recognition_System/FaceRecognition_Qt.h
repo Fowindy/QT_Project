@@ -8,7 +8,7 @@ class FaceRecognition_Qt : public QObject
 	Q_OBJECT
 
 public:
-	FaceRecognition_Qt(const QString &apiKey, const QString &secretKey);
+	FaceRecognition_Qt(const QString &apiKey, const QString &secretKey);	//返回相似度
 	bool RegisterMember(QString qStrImage, QString userId);	//注册人脸
 	~FaceRecognition_Qt();
 
@@ -20,4 +20,6 @@ private:
 	QString m_userId;	//用户Id
 	double m_dThresholdValue;	//人脸识别的阈值
 	NetJson_Qt::HTTP m_http;	//http网络对象
+public slots:
+	bool refreshToken(void);	//更新Token
 };
