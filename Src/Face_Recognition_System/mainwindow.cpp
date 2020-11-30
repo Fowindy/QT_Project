@@ -84,6 +84,24 @@ void MainWindow::on_btnCheckInRecord_clicked()
 }
 
 /************************************
+*@Method:    on_btnWorkerInfoCaptured_clicked
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/11/30 18:16
+*@Describe:	 员工信息采集按钮
+*************************************/
+void MainWindow::on_btnWorkerInfoCaptured_clicked()
+{
+	//设置事件类型_注册
+	m_ControlType = REGISTER_TYPE;
+	//开始实时采图
+	m_cameraImageCapture->capture();
+	//开始注册人脸信息库
+	qDebug() << "开始注册人脸信息库!";
+}
+
+/************************************
 *@Method:    cameraImageCaptured
 *@Access:    private
 *@Returns:   int
