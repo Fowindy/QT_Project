@@ -201,16 +201,6 @@
          </item>
         </layout>
        </widget>
-       <widget class="QTextBrowser" name="cameraWindow">
-        <property name="geometry">
-         <rect>
-          <x>270</x>
-          <y>40</y>
-          <width>361</width>
-          <height>391</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QPushButton" name="btnCheckIn">
         <property name="geometry">
          <rect>
@@ -334,6 +324,17 @@
           </spacer>
          </item>
         </layout>
+       </widget>
+       <widget class="QWidget" name="verticalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>270</x>
+          <y>80</y>
+          <width>381</width>
+          <height>351</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="cameraWindow"/>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_2">

@@ -4,10 +4,14 @@
 #include <QMainWindow>
 #include "KaoQin.h"
 #include "FaceRecognition_Qt.h"
+#include <QCamera>
+#include <QCameraViewfinder>
+#include <QCameraImageCapture>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+#define REGISTER_TYPE	2	//注册
 
 class MainWindow : public QMainWindow
 {
@@ -21,9 +25,14 @@ private:
 	Ui::MainWindow *ui;
 	KaoQin *mKaoQin;	//考勤对象
 	FaceRecognition_Qt *m_Face;	//人脸识别接口对象
+	QCamera *m_camera;	//相机对象_multimedia
+	QCameraViewfinder *m_cameraViewFinder;	//摄像头取景器部件_multimediawidgets
+	QCameraImageCapture *m_cameraImageCapture;	//截图部件
+	int m_ControlType;	//事件类型
 
 private slots:
 	void on_btnExit_clicked();	//退出按钮
 	void on_btnCheckInRecord_clicked();	//考勤记录按钮
+	int cameraImageCaptured(int index, QImage image);	//采图槽函数
 };
 #endif // MAINWINDOW_H

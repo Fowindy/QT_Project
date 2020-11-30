@@ -22,7 +22,7 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -56,7 +56,6 @@ public:
     QLabel *label_6;
     QSpacerItem *horizontalSpacer_4;
     QLineEdit *kq_post;
-    QTextBrowser *cameraWindow;
     QPushButton *btnCheckIn;
     QPushButton *btnWorkerInfoCaptured;
     QPushButton *btnOpenCam;
@@ -69,6 +68,8 @@ public:
     QSpacerItem *horizontalSpacer_7;
     QPushButton *btnExit;
     QSpacerItem *horizontalSpacer_8;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *cameraWindow;
     QWidget *tab_2;
     QWidget *tab_3;
     QMenuBar *menubar;
@@ -191,9 +192,6 @@ public:
 
         gridLayout_2->addLayout(horizontalLayout_4, 4, 0, 1, 1);
 
-        cameraWindow = new QTextBrowser(tab);
-        cameraWindow->setObjectName(QString::fromUtf8("cameraWindow"));
-        cameraWindow->setGeometry(QRect(270, 40, 361, 391));
         btnCheckIn = new QPushButton(tab);
         btnCheckIn->setObjectName(QString::fromUtf8("btnCheckIn"));
         btnCheckIn->setGeometry(QRect(10, 40, 141, 23));
@@ -240,6 +238,12 @@ public:
 
         horizontalLayout_6->addItem(horizontalSpacer_8);
 
+        verticalLayoutWidget = new QWidget(tab);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(270, 80, 381, 351));
+        cameraWindow = new QVBoxLayout(verticalLayoutWidget);
+        cameraWindow->setObjectName(QString::fromUtf8("cameraWindow"));
+        cameraWindow->setContentsMargins(0, 0, 0, 0);
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
