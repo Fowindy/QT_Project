@@ -13,6 +13,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 #define REGISTER_TYPE	2	//注册
+#define LOGIN_TYPE	1	//登录
 
 class MainWindow : public QMainWindow
 {
@@ -36,5 +37,6 @@ private slots:
 	void on_btnExit_clicked();	//退出按钮
 	void on_btnCheckInRecord_clicked();	//考勤记录按钮
 	int cameraImageCaptured(int index, QImage image);	//采图槽函数
+	void timerUpdate(void);	//更新时间
 };
 #endif // MAINWINDOW_H

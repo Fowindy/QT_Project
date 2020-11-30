@@ -70,6 +70,7 @@ public:
     QSpacerItem *horizontalSpacer_8;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *cameraWindow;
+    QLabel *dateTable;
     QWidget *tab_2;
     QWidget *tab_3;
     QMenuBar *menubar;
@@ -244,6 +245,9 @@ public:
         cameraWindow = new QVBoxLayout(verticalLayoutWidget);
         cameraWindow->setObjectName(QString::fromUtf8("cameraWindow"));
         cameraWindow->setContentsMargins(0, 0, 0, 0);
+        dateTable = new QLabel(tab);
+        dateTable->setObjectName(QString::fromUtf8("dateTable"));
+        dateTable->setGeometry(QRect(310, 30, 301, 21));
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
@@ -287,6 +291,7 @@ public:
         btnCheckInRecord->setText(QCoreApplication::translate("MainWindow", "\350\200\203\345\213\244\350\256\260\345\275\225", nullptr));
         btnAdminLogin->setText(QCoreApplication::translate("MainWindow", "\347\256\241\347\220\206\345\221\230\347\231\273\345\275\225", nullptr));
         btnExit->setText(QCoreApplication::translate("MainWindow", "\351\200\200\345\207\272", nullptr));
+        dateTable->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "\344\272\272\350\204\270\350\200\203\345\213\244\347\263\273\347\273\237", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "\351\242\234\345\200\274\350\257\204\345\210\206\347\263\273\347\273\237", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "\344\272\272\350\204\270\346\257\224\345\257\271\347\263\273\347\273\237", nullptr));

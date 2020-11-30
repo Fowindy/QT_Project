@@ -336,6 +336,19 @@
         </property>
         <layout class="QVBoxLayout" name="cameraWindow"/>
        </widget>
+       <widget class="QLabel" name="dateTable">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>30</y>
+          <width>301</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">

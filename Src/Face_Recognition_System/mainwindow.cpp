@@ -31,6 +31,22 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(m_cameraImageCapture, SIGNAL(imageCaptured(int, QImage)), this, SLOT(cameraImageCaptured(int, QImage)));
 	//信息录入对象连接信号和槽_信息录入页面返回按钮显示首页
 	connect(mInfo, SIGNAL(infoSignal()), this, SLOT(show()));
+	//设置截图目标
+	m_cameraImageCapture->setCaptureDestination(QCameraImageCapture::CaptureToFile);
+	//设置截图方式
+	m_camera->setCaptureMode(QCamera::CaptureStillImage);
+	//加载取景部件
+	m_camera->setViewfinder(m_cameraViewFinder);
+	//启用摄像头
+	m_camera->start();
+	//设定事件类型_登录
+	m_ControlType = LOGIN_TYPE;
+	//定时器对象
+	QTimer *timer = new QTimer(this);
+	//实时刷新显示时间
+	connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
+	//刷新频率1秒
+	timer->start(1000);
 }
 
 MainWindow::~MainWindow()
@@ -128,5 +144,21 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 			}
 		}
 	}
+}
+
+/************************************
+*@Method:    timerUpdate
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Parameter: void
+*@Created:   2020/11/30 16:30
+*@Describe:	 更新时间
+*************************************/
+void MainWindow::timerUpdate(void)
+{
+	QDateTime time = QDateTime::currentDateTime();
+	QString str = time.toString("yyyy-MM-dd hh:mm:ss dddd");
+	ui->dateTable->setText(str);
 }
 
