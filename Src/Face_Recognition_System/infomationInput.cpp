@@ -3,6 +3,7 @@
 #include <QSqlDatabase>
 #include <QDebug>
 #include <QSqlQuery>
+#include <QDateTime>
 
 infomationInput::infomationInput(QWidget *parent)
 	: QWidget(parent)
@@ -86,5 +87,32 @@ void infomationInput::on_btnSure_clicked()
 	{
 		qDebug() << "worker Table created!";
 		ui->listWidget->addItem(tr("worker Table created Success!"));
+	}
+	//获取当前系统时间
+	QDateTime time = QDateTime::currentDateTime();
+	//时间格式
+	QString str = time.toString("yyyy-MM-dd hh:mm");
+	//参数数组赋值
+	QString args[5] = { ui->info_Id->text(),ui->info_Name->text(),ui->info_Department->text(),ui->info_Post->text(),str };
+	//创建数据查询对象
+	//QSqlQuery query;
+	//拼接插入数据语句
+	QString sql = QString("insert into worker values('%1','%2','%3','%4','%5')").arg(args[0]).arg(args[1]).arg(args[2]).arg(args[3]).arg(args[4]);
+
+	//插入sql语句到数据表
+	sql_query.prepare(sql);
+	//判断插入是否成功
+	if (!sql_query.exec(sql))
+	{
+		qDebug() << "数据插入失败,请检查工号是否已存在!" << sql_query.lastError();
+		ui->listWidget->addItem(tr("数据插入失败,请检查工号是否已存在!"));
+		//关闭数据库
+		database.close();
+	}
+	else
+	{
+		qDebug() << "数据插入成功!";
+		ui->listWidget->addItem(tr("数据插入成功!"));
+		database.close();
 	}
 }
