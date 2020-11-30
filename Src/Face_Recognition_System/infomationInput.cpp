@@ -66,8 +66,9 @@ void infomationInput::on_btnSure_clicked()
 		qDebug() << "错误:数据库连接失败..." << database.lastError();
 		ui->listWidget->addItem(tr("错误:数据库连接失败..."));
 	}
-	else
+	else	//数据库连接成功
 	{
-
+		qDebug() << "数据库连接成功...";
+		ui->listWidget->addItem(tr("数据库连接成功..."));
 	}
 }
