@@ -7,6 +7,7 @@
 #include <QCamera>
 #include <QCameraViewfinder>
 #include <QCameraImageCapture>
+#include "infomationInput.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +30,7 @@ private:
 	QCameraViewfinder *m_cameraViewFinder;	//摄像头取景器部件_multimediawidgets
 	QCameraImageCapture *m_cameraImageCapture;	//截图部件
 	int m_ControlType;	//事件类型
+	infomationInput *mInfo;	//信息页面对象
 
 private slots:
 	void on_btnExit_clicked();	//退出按钮

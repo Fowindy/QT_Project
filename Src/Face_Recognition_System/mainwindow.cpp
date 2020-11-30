@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->cameraWindow->addWidget(m_cameraViewFinder);
 	//连接截图的信号和槽_实时刷新显示
 	connect(m_cameraImageCapture, SIGNAL(imageCaptured(int, QImage)), this, SLOT(cameraImageCapture(int, QImage)));
+	//信息录入对象连接信号和槽_信息录入页面返回按钮显示首页
+	connect(mInfo, SIGNAL(infoSignal()), this, SLOT(show()));
 }
 
 MainWindow::~MainWindow()
@@ -114,6 +116,7 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 				//隐藏当前窗口
 				this->hide();
 				//显示信息窗口
+				mInfo->show();
 			}
 		}
 	}
