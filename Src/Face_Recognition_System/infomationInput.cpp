@@ -2,6 +2,7 @@
 #include "ui_infomationInput.h"
 #include <QSqlDatabase>
 #include <QDebug>
+#include <QSqlQuery>
 
 infomationInput::infomationInput(QWidget *parent)
 	: QWidget(parent)
@@ -71,4 +72,6 @@ void infomationInput::on_btnSure_clicked()
 		qDebug() << "数据库连接成功...";
 		ui->listWidget->addItem(tr("数据库连接成功..."));
 	}
+	//创建数据库表格对象
+	QSqlQuery sql_query;
 }
