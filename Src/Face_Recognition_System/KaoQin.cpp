@@ -1,4 +1,5 @@
-﻿#include "KaoQin.h"
+﻿#pragma execution_character_set("utf-8")
+#include "KaoQin.h"
 #include "ui_KaoQin.h"
 
 KaoQin::KaoQin(QWidget *parent)

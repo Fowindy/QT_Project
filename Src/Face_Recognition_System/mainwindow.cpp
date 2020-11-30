@@ -13,8 +13,12 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	//实例化考勤对象
 	mKaoQin = new KaoQin();
+	//实例化信息界面对象
+	mInfo = new infomationInput();
 	//KaoQin对象连接信号和槽_KaoQin页面返回按钮显示首页
 	connect(mKaoQin, SIGNAL(KaoQinSignal()), this, SLOT(show()));
+	//信息界面连接信号和槽
+	connect(mInfo, SIGNAL(infoSignal()), this, SLOT(show()));
 	//实例化人脸识别对象
 	m_Face = new FaceRecognition_Qt("VB5zp8jnFjLf6wjLtw4lbnme", "ohlu3eO12VMs1qKT8MiSGxb3hShmUyfj");
 	//刷新Token
@@ -151,7 +155,6 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 				this->hide();
 				//显示信息窗口
 				mInfo->show();
-				return 0;
 			}
 			else
 			{
@@ -162,6 +165,7 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 			}
 		}
 	}
+	return 0;
 }
 
 /************************************

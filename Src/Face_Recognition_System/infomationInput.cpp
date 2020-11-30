@@ -1,4 +1,5 @@
-﻿#include "infomationInput.h"
+﻿#pragma execution_character_set("utf-8")
+#include "infomationInput.h"
 #include "ui_infomationInput.h"
 #include <QSqlDatabase>
 #include <QDebug>
