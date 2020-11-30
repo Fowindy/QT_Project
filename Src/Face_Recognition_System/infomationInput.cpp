@@ -74,4 +74,17 @@ void infomationInput::on_btnSure_clicked()
 	}
 	//创建数据库表格对象
 	QSqlQuery sql_query;
+	//往数据库表格写入数据
+	//如果不存在员工表格
+	if (!sql_query.exec("create table IF NOT EXISTS  worker(id int primary key, name varchar(20), department varchar(20), post varchar(20),time Text)"))
+	{
+		//错误:创建数据表失败
+		qDebug() << "Error: Fail to create table." << sql_query.lastError();
+		ui->listWidget->addItem(tr("Error: Fail to create worker table."));
+	}
+	else	//worker数据表创建成功
+	{
+		qDebug() << "worker Table created!";
+		ui->listWidget->addItem(tr("worker Table created Success!"));
+	}
 }
