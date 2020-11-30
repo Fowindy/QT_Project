@@ -188,6 +188,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FaceRecognition_Qt.cpp" />
+    <ClCompile Include="infomationInput.cpp" />
     <ClCompile Include="KaoQin.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
@@ -198,6 +199,7 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="infomationInput.ui" />
     <QtUic Include="KaoQin.ui" />
     <QtUic Include="mainwindow.ui">
     </QtUic>
@@ -211,6 +213,7 @@
   <ItemGroup>
     <QtMoc Include="FaceRecognition_Qt.h" />
     <QtMoc Include="NetJson_Qt.h" />
+    <QtMoc Include="infomationInput.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
