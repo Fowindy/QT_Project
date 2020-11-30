@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
 	//摄像头取景部件加载到界面
 	ui->cameraWindow->addWidget(m_cameraViewFinder);
 	//连接截图的信号和槽_实时刷新显示
-	connect(m_cameraImageCapture, SIGNAL(imageCaptured(int, QImage)), this, SLOT(cameraImageCapture(int, QImage)));
+	connect(m_cameraImageCapture, SIGNAL(imageCaptured(int, QImage)), this, SLOT(cameraImageCaptured(int, QImage)));
 	//信息录入对象连接信号和槽_信息录入页面返回按钮显示首页
 	connect(mInfo, SIGNAL(infoSignal()), this, SLOT(show()));
 }
@@ -117,6 +117,14 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 				this->hide();
 				//显示信息窗口
 				mInfo->show();
+				return 0;
+			}
+			else
+			{
+				qDebug() << "人脸信息录入失败";
+				QMessageBox::information(NULL, "错误", "请检查您的网络或与管理员联系！",
+					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+				return 1;
 			}
 		}
 	}
