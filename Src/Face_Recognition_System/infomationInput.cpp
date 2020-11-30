@@ -1,6 +1,7 @@
 ﻿#include "infomationInput.h"
 #include "ui_infomationInput.h"
 #include <QSqlDatabase>
+#include <QDebug>
 
 infomationInput::infomationInput(QWidget *parent)
 	: QWidget(parent)
@@ -58,5 +59,15 @@ void infomationInput::on_btnSure_clicked()
 		database.setUserName("123456");
 		//设置数据库的密码
 		database.setPassword("123456");
+	}
+	//如果数据库没有打开_数据库连接失败
+	if (!database.open())
+	{
+		qDebug() << "错误:数据库连接失败..." << database.lastError();
+		ui->listWidget->addItem(tr("错误:数据库连接失败..."));
+	}
+	else
+	{
+
 	}
 }
