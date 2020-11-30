@@ -14,7 +14,8 @@ signals:
 	//info界面信号函数
 	void infoSignal();
 private slots:
-	void on_btnReturn_clicked();
+	void on_btnReturn_clicked();	//返回按钮
+	void on_btnSure_clicked();	//确定按钮
 
 private:
 	Ui::infomationInput *ui;
