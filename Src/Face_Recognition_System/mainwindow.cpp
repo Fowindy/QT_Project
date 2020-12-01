@@ -5,7 +5,10 @@
 #include <QBuffer>
 #include <QInputDialog>
 #include <QMessageBox>
-
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+static int temp = 0;
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow)
@@ -106,6 +109,69 @@ void MainWindow::on_btnWorkerInfoCaptured_clicked()
 }
 
 /************************************
+*@Method:    on_btnCheckIn_clicked
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/12/01 10:18
+*@Describe:	 确认打开按钮
+*************************************/
+void MainWindow::on_btnCheckIn_clicked()
+{
+	//创建数据库对象
+	QSqlDatabase database;
+	//如果数据库已存在,则直接使用
+	if (QSqlDatabase::contains("qt_sql_default_connection"))
+	{
+		database = QSqlDatabase::database("qt_sql_default_connection");
+	}
+	else	//不存在则新建数据库
+	{
+		database = QSqlDatabase::addDatabase("QSQLITE");
+		database.setDatabaseName("MyDataBase.db");
+		database.setUserName("123456");
+		database.setPassword("123456");
+	}
+	//如果数据库打开失败
+	if (!database.open())
+	{
+		qDebug() << "错误:数据库打开失败..." << database.lastError();
+
+	}
+	//数据库打开成功
+	else
+	{
+		qDebug() << "数据库打开成功...";
+	}
+	//获取当前打卡系统时间
+	QDateTime time = QDateTime::currentDateTime();
+	//设定时间格式
+	QString str = time.toString("yyyy-MM-dd hh:mm");
+	//创建查询对象
+	QSqlQuery query;
+	//更新查询语句
+	QString sql = QString("UPDATE worker SET time = '%1' WHERE id = '%2'").arg(str).arg(temp);
+	//修改操作
+	query.prepare(sql);
+	//如果执行失败
+	if (!query.exec())
+	{
+		qDebug() << "打卡时间更新失败！" << query.lastError();
+	}
+	else
+	{
+		qDebug("打卡时间更新成功");
+	}
+	//关闭数据库
+	database.close();
+	//切换事件状态为登录
+	m_ControlType = LOGIN_TYPE;
+	//刷新采图
+	m_cameraImageCapture->capture();
+	qDebug() << "正在进行人脸比对.";
+}
+
+/************************************
 *@Method:    cameraImageCaptured
 *@Access:    private
 *@Returns:   int
@@ -162,6 +228,74 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 				QMessageBox::information(NULL, "错误", "请检查您的网络或与管理员联系！",
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 				return 1;
+			}
+		}
+		//登录事件类型
+		else if (m_ControlType == LOGIN_TYPE)
+		{
+			//调用人脸搜索
+			int success = m_Face->IdentifyFace(imgData);
+			temp = success;
+			if (!success)
+			{
+				qDebug() << "比对失败";
+				QMessageBox::information(NULL, "错误", "打卡失败，人脸信息不匹配或人脸库中查无此人，请重新打卡！",
+					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+			}
+			else	//比对成功
+			{
+				//打开数据库
+				QSqlDatabase database;
+				//如果数据库已经存在,则直接采用
+				if (QSqlDatabase::contains("qt_sql_default_connection"))
+				{
+					database = QSqlDatabase::database("qt_sql_default_connection");
+				}
+				else	//数据库不存在则新建
+				{
+					database = QSqlDatabase::addDatabase("QSQLITE");
+					database.setDatabaseName("MyDataBase.db");
+					database.setUserName("123456");
+					database.setPassword("123456");
+				}
+				//数据库打开失败
+				if (!database.open())
+				{
+					qDebug() << "错误: 数据库打开失败..." << database.lastError();
+				}
+				else
+				{
+					qDebug() << "数据库打开成功...";
+				}
+				//创建查询对象
+				QSqlQuery query;
+				//拼接id查询语句
+				QString sql = QString("SELECT * FROM worker WHERE id='%1'").arg(success);
+				//执行查询命令
+				query.exec(sql);
+				while (query.next())	//查询结果下一条不为空则继续
+				{
+#pragma region 解析获取的结果
+					QString id = query.value(0).toString();
+					QString name = query.value(1).toString();
+					QString department = query.value(2).toString();
+					QString post = query.value(3).toString();
+					QString time = query.value(4).toString();
+#pragma endregion
+					qDebug() << id << name << department << post << time;
+#pragma region 同步到界面显示
+					ui->kq_id->setText(id);
+					ui->kq_department->setText(department);
+					ui->kq_name->setText(name);
+					ui->kq_post->setText(post);
+					ui->kq_time->setText(time);
+#pragma endregion
+				}
+				qDebug() << "比对成功";
+				QMessageBox::information(NULL, "完成", "打卡成功！",
+					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+				database.close();
+				m_camera->stop();
 			}
 		}
 	}

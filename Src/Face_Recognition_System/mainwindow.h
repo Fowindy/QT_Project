@@ -37,6 +37,7 @@ private slots:
 	void on_btnExit_clicked();	//退出按钮
 	void on_btnCheckInRecord_clicked();	//考勤记录按钮
 	void on_btnWorkerInfoCaptured_clicked();	//员工信息采集按钮
+	void on_btnCheckIn_clicked();	//确认打卡按钮
 	int cameraImageCaptured(int index, QImage image);	//采图槽函数
 	void timerUpdate(void);	//更新时间
 };

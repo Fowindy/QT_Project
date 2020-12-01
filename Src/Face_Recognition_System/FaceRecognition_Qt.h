@@ -10,6 +10,7 @@ class FaceRecognition_Qt : public QObject
 public:
 	FaceRecognition_Qt(const QString &apiKey, const QString &secretKey);	//返回相似度
 	bool RegisterMember(QString qStrImage, QString userId);	//注册人脸
+	int IdentifyFace(QString qstrImage);	//比对人脸
 	~FaceRecognition_Qt();
 
 private:

@@ -4,6 +4,7 @@
 #include <QNetworkRequest>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonArray>
 
 /************************************
 *@Method:    FaceRecognition_Qt
@@ -61,6 +62,50 @@ bool FaceRecognition_Qt::RegisterMember(QString qStrImage, QString userId)
 	{
 		return true;
 	}
+}
+
+/************************************
+*@Method:    IdentifyFace
+*@Access:    public
+*@Returns:   int	成功返回id,失败返回false
+*@Author: 	  Fowindy
+*@Parameter: QString qstrImage
+*@Created:   2020/11/30 22:04
+*@Describe:	 比对人脸
+*************************************/
+int FaceRecognition_Qt::IdentifyFace(QString qstrImage)
+{
+	//拼接人脸搜素的url
+	QUrl url("https://aip.baidubce.com/rest/2.0/face/v3/search?access_token=" + m_token);
+	//创建请求对象
+	QNetworkRequest request(url);
+	//创建json参数
+	QJsonObject append;
+	request.setRawHeader("Content-Type", "application/json");
+	append["image"] = qstrImage;
+	append["image_type"] = "BASE64";
+	append["group_id_list"] = "Color";
+	QByteArray buf;
+	m_http.post(request, QJsonDocument(append).toJson(), buf, 15000);
+	QJsonObject acceptedData(QJsonDocument::fromJson(buf).object());
+	if (buf.isEmpty() || acceptedData.isEmpty() || !acceptedData.contains("result"))
+	{
+		return false;
+	}
+	QJsonObject result = acceptedData.take("result").toObject();
+	if (result.contains("user_list"))
+	{
+		QJsonArray user_list = result.take("user_list").toArray();
+		QJsonObject userObj = user_list.at(0).toObject();
+		double score = userObj["score"].toDouble();
+		QString user_id = userObj["user_id"].toString();
+		int tmp = user_id.toInt();
+		if (score >= m_dThresholdValue)
+			return tmp;
+		else
+			return false;
+	}
+	return false;
 }
 
 FaceRecognition_Qt::~FaceRecognition_Qt()
