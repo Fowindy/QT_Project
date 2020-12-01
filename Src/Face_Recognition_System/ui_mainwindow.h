@@ -241,7 +241,7 @@ public:
 
         verticalLayoutWidget = new QWidget(tab);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(270, 80, 381, 351));
+        verticalLayoutWidget->setGeometry(QRect(270, 40, 381, 391));
         cameraWindow = new QVBoxLayout(verticalLayoutWidget);
         cameraWindow->setObjectName(QString::fromUtf8("cameraWindow"));
         cameraWindow->setContentsMargins(0, 0, 0, 0);

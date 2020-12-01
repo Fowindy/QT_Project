@@ -9,6 +9,9 @@ class KaoQin : public QWidget
 
 public:
 	KaoQin(QWidget *parent = Q_NULLPTR);
+
+	void RefreshTable();
+
 	~KaoQin();
 
 signals:

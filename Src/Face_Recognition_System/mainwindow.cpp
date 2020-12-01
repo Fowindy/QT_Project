@@ -86,6 +86,8 @@ void MainWindow::on_btnCheckInRecord_clicked()
 {
 	//隐藏首页
 	this->hide();
+	//刷新考勤页数据
+	mKaoQin->RefreshTable();
 	//显示考勤页
 	mKaoQin->show();
 }
@@ -118,6 +120,9 @@ void MainWindow::on_btnWorkerInfoCaptured_clicked()
 *************************************/
 void MainWindow::on_btnCheckIn_clicked()
 {
+	//刷新采图
+	m_cameraImageCapture->capture();
+	qDebug() << "正在进行人脸比对.";
 	//创建数据库对象
 	QSqlDatabase database;
 	//如果数据库已存在,则直接使用
@@ -166,9 +171,6 @@ void MainWindow::on_btnCheckIn_clicked()
 	database.close();
 	//切换事件状态为登录
 	m_ControlType = LOGIN_TYPE;
-	//刷新采图
-	m_cameraImageCapture->capture();
-	qDebug() << "正在进行人脸比对.";
 }
 
 /************************************
@@ -273,6 +275,7 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 				QString sql = QString("SELECT * FROM worker WHERE id='%1'").arg(success);
 				//执行查询命令
 				query.exec(sql);
+				QString strTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 				while (query.next())	//查询结果下一条不为空则继续
 				{
 #pragma region 解析获取的结果
@@ -288,10 +291,23 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 					ui->kq_department->setText(department);
 					ui->kq_name->setText(name);
 					ui->kq_post->setText(post);
-					ui->kq_time->setText(time);
+					ui->kq_time->setText(strTime);
 #pragma endregion
 				}
 				qDebug() << "比对成功";
+				//更新查询语句
+				sql = QString("UPDATE worker SET time = '%1' WHERE id = '%2'").arg(strTime).arg(temp);
+				//修改操作
+				query.prepare(sql);
+				//如果执行失败
+				if (!query.exec())
+				{
+					qDebug() << "打卡时间更新失败！" << query.lastError();
+				}
+				else
+				{
+					qDebug("打卡时间更新成功");
+				}
 				QMessageBox::information(NULL, "完成", "打卡成功！",
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 				database.close();
