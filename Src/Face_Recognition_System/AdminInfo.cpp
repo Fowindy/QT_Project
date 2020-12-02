@@ -3,6 +3,10 @@
 #include "ui_AdminInfo.h"
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QDebug>
+#include <QSqlError>
 
 AdminInfo::AdminInfo(QWidget *parent)
 	: QWidget(parent)
@@ -70,4 +74,66 @@ void AdminInfo::on_btnDelWorker_clicked()
 	{
 		QMessageBox::information(NULL, "错误:工号不能为空", "请输入正确的工号!", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 	}
+}
+
+/************************************
+*@Method:    on_btnRefresh_clicked
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/12/02 15:23
+*@Describe:	 刷新按钮槽函数
+*************************************/
+void AdminInfo::on_btnRefreshTable_clicked()
+{
+	for (int cow = 0; cow < 40; cow++) {
+		for (int row = 0; row < 4; row++) {
+			ui->worker->setItem(cow, row, new QTableWidgetItem(nullptr));
+		}
+	}
+
+	//创建数据库对象
+	QSqlDatabase database;
+	//如果已存在数据库则直接使用
+	if (QSqlDatabase::contains("qt_sql_default_connection"))
+	{
+		database = QSqlDatabase::database("qt_sql_default_connection");
+	}
+	else	//创建数据库
+	{
+		database = QSqlDatabase::addDatabase("QSQLITE");
+		database.setDatabaseName("MyDataBase.db");
+		database.setUserName("123456");
+		database.setPassword("123456");
+	}
+	//打开数据库
+	if (!database.open())
+	{
+		qDebug() << "错误:数据库连接失败..." << database.lastError();
+	}
+	else
+	{
+		qDebug() << "数据库连接成功!...";
+	}
+	//创建查询语句对象
+	QSqlQuery query;
+	//拼接sql查询语句
+	QString sql = QString("SELECT * FROM worker");
+	//执行查询
+	query.exec(sql);
+	//设定表格属性
+	ui->worker->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	ui->worker->setSelectionBehavior(QAbstractItemView::SelectRows);
+	ui->worker->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	int cell = 0;
+	while (query.next())
+	{
+		for (int row = 0; row < 4; row++)
+		{
+			ui->worker->setItem(cell, row, new QTableWidgetItem(query.value(row).toString()));
+		}
+		cell++;
+	}
+	//关闭数据库
+	database.close();
 }

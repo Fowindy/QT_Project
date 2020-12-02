@@ -22,8 +22,8 @@ QT_BEGIN_NAMESPACE
 class Ui_AdminInfo
 {
 public:
-    QTableWidget *tableWidget;
-    QWidget *widget;
+    QTableWidget *worker;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QPushButton *btnAddWorker;
     QPushButton *btnDelWorker;
@@ -35,46 +35,46 @@ public:
         if (AdminInfo->objectName().isEmpty())
             AdminInfo->setObjectName(QString::fromUtf8("AdminInfo"));
         AdminInfo->resize(671, 375);
-        tableWidget = new QTableWidget(AdminInfo);
-        if (tableWidget->columnCount() < 4)
-            tableWidget->setColumnCount(4);
+        worker = new QTableWidget(AdminInfo);
+        if (worker->columnCount() < 4)
+            worker->setColumnCount(4);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        worker->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        worker->setHorizontalHeaderItem(1, __qtablewidgetitem1);
         QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+        worker->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem3);
-        if (tableWidget->rowCount() < 9)
-            tableWidget->setRowCount(9);
-        tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(10, 10, 451, 321));
-        tableWidget->setRowCount(9);
-        widget = new QWidget(AdminInfo);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(480, 10, 181, 321));
-        verticalLayout = new QVBoxLayout(widget);
+        worker->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+        if (worker->rowCount() < 9)
+            worker->setRowCount(9);
+        worker->setObjectName(QString::fromUtf8("worker"));
+        worker->setGeometry(QRect(10, 10, 451, 321));
+        worker->setRowCount(9);
+        layoutWidget = new QWidget(AdminInfo);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(480, 10, 181, 321));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        btnAddWorker = new QPushButton(widget);
+        btnAddWorker = new QPushButton(layoutWidget);
         btnAddWorker->setObjectName(QString::fromUtf8("btnAddWorker"));
 
         verticalLayout->addWidget(btnAddWorker);
 
-        btnDelWorker = new QPushButton(widget);
+        btnDelWorker = new QPushButton(layoutWidget);
         btnDelWorker->setObjectName(QString::fromUtf8("btnDelWorker"));
 
         verticalLayout->addWidget(btnDelWorker);
 
-        btnRefreshTable = new QPushButton(widget);
+        btnRefreshTable = new QPushButton(layoutWidget);
         btnRefreshTable->setObjectName(QString::fromUtf8("btnRefreshTable"));
 
         verticalLayout->addWidget(btnRefreshTable);
 
-        btnReturn = new QPushButton(widget);
+        btnReturn = new QPushButton(layoutWidget);
         btnReturn->setObjectName(QString::fromUtf8("btnReturn"));
 
         verticalLayout->addWidget(btnReturn);
@@ -88,13 +88,13 @@ public:
     void retranslateUi(QWidget *AdminInfo)
     {
         AdminInfo->setWindowTitle(QCoreApplication::translate("AdminInfo", "AdminInfo", nullptr));
-        QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
+        QTableWidgetItem *___qtablewidgetitem = worker->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("AdminInfo", "\345\267\245\345\217\267", nullptr));
-        QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
+        QTableWidgetItem *___qtablewidgetitem1 = worker->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QCoreApplication::translate("AdminInfo", "\345\247\223\345\220\215", nullptr));
-        QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
+        QTableWidgetItem *___qtablewidgetitem2 = worker->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QCoreApplication::translate("AdminInfo", "\351\203\250\351\227\250", nullptr));
-        QTableWidgetItem *___qtablewidgetitem3 = tableWidget->horizontalHeaderItem(3);
+        QTableWidgetItem *___qtablewidgetitem3 = worker->horizontalHeaderItem(3);
         ___qtablewidgetitem3->setText(QCoreApplication::translate("AdminInfo", "\350\201\214\344\275\215", nullptr));
         btnAddWorker->setText(QCoreApplication::translate("AdminInfo", "\345\242\236\345\212\240\345\221\230\345\267\245\344\277\241\346\201\257", nullptr));
         btnDelWorker->setText(QCoreApplication::translate("AdminInfo", "\345\210\240\351\231\244\345\221\230\345\267\245\344\277\241\346\201\257", nullptr));
