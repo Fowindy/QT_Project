@@ -79,6 +79,7 @@ public:
 
         PassWordEdt = new QLineEdit(layoutWidget);
         PassWordEdt->setObjectName(QString::fromUtf8("PassWordEdt"));
+        PassWordEdt->setEchoMode(QLineEdit::Password);
 
         horizontalLayout_2->addWidget(PassWordEdt);
 
