@@ -8,12 +8,15 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QThread>
 static int temp = 0;
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	//实例化管理对象
+	m_AdminInfo = new AdminInfo();
 	//实例化考勤对象
 	mKaoQin = new KaoQin();
 	//实例化信息界面对象
@@ -151,7 +154,7 @@ void MainWindow::on_btnCheckIn_clicked()
 	//获取当前打卡系统时间
 	QDateTime time = QDateTime::currentDateTime();
 	//设定时间格式
-	QString str = time.toString("yyyy-MM-dd hh:mm");
+	QString str = time.toString("yyyy-MM-dd hh:mm:ss");
 	//创建查询对象
 	QSqlQuery query;
 	//更新查询语句
@@ -171,6 +174,53 @@ void MainWindow::on_btnCheckIn_clicked()
 	database.close();
 	//切换事件状态为登录
 	m_ControlType = LOGIN_TYPE;
+}
+
+/************************************
+*@Method:    on_btnOpenCam_clicked
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/12/01 12:59
+*@Describe:	 打开摄像头按钮
+*************************************/
+void MainWindow::on_btnOpenCam_clicked()
+{
+	m_camera = new QCamera(this);	//系统摄像头设备
+	m_cameraViewFinder = new QCameraViewfinder(this);	//摄像头取景器部件
+	m_cameraImageCapture = new QCameraImageCapture(m_camera);	//截图部件
+	ui->cameraWindow->addWidget(m_cameraViewFinder);	//ui显示取景
+	//实时刷新
+	connect(m_cameraImageCapture, SIGNAL(imageCaptured(int, QImage)), this, SLOT(cameraImageCaptured(int, QImage)));
+	m_cameraImageCapture->setCaptureDestination(QCameraImageCapture::CaptureToFile);
+	m_camera->setCaptureMode(QCamera::CaptureStillImage);
+	m_camera->setViewfinder(m_cameraViewFinder);
+	m_camera->start();//启动摄像头
+	m_ControlType = LOGIN_TYPE;
+}
+
+/************************************
+*@Method:    on_btnAdminLogin_clicked
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/12/01 13:22
+*@Describe:	 管理员登录按钮
+*************************************/
+void MainWindow::on_btnAdminLogin_clicked()
+{
+	this->hide();
+	m_Login = new AdminLogin(nullptr);
+	m_Login->exec();
+	int result = m_Login->GetLoginResult();
+	while (result != LOGIN_SUCCEED) {
+		QMessageBox::information(NULL, "错误", "管理员密码错误，请重新输入",
+			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+		m_Login->exec();
+		result = m_Login->GetLoginResult();
+	}
+	//m_Login->hide();
+	m_AdminInfo->show();
 }
 
 /************************************
@@ -312,6 +362,8 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 				database.close();
 				m_camera->stop();
+				QThread::sleep(3);
+				m_camera->start();
 			}
 		}
 	}

@@ -63,7 +63,11 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="kq_time"/>
+            <widget class="QLineEdit" name="kq_time">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -96,7 +100,11 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLineEdit" name="kq_name"/>
+            <widget class="QLineEdit" name="kq_name">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -129,7 +137,11 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLineEdit" name="kq_id"/>
+            <widget class="QLineEdit" name="kq_id">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -162,7 +174,11 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLineEdit" name="kq_department"/>
+            <widget class="QLineEdit" name="kq_department">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -195,7 +211,11 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLineEdit" name="kq_post"/>
+            <widget class="QLineEdit" name="kq_post">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>

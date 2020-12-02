@@ -107,6 +107,7 @@ public:
 
         kq_time = new QLineEdit(groupBox);
         kq_time->setObjectName(QString::fromUtf8("kq_time"));
+        kq_time->setReadOnly(true);
 
         horizontalLayout_5->addWidget(kq_time);
 
@@ -127,6 +128,7 @@ public:
 
         kq_name = new QLineEdit(groupBox);
         kq_name->setObjectName(QString::fromUtf8("kq_name"));
+        kq_name->setReadOnly(true);
 
         horizontalLayout->addWidget(kq_name);
 
@@ -147,6 +149,7 @@ public:
 
         kq_id = new QLineEdit(groupBox);
         kq_id->setObjectName(QString::fromUtf8("kq_id"));
+        kq_id->setReadOnly(true);
 
         horizontalLayout_2->addWidget(kq_id);
 
@@ -167,6 +170,7 @@ public:
 
         kq_department = new QLineEdit(groupBox);
         kq_department->setObjectName(QString::fromUtf8("kq_department"));
+        kq_department->setReadOnly(true);
 
         horizontalLayout_3->addWidget(kq_department);
 
@@ -187,6 +191,7 @@ public:
 
         kq_post = new QLineEdit(groupBox);
         kq_post->setObjectName(QString::fromUtf8("kq_post"));
+        kq_post->setReadOnly(true);
 
         horizontalLayout_4->addWidget(kq_post);
 

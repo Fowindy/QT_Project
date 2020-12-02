@@ -52,6 +52,12 @@
     <ClCompile Include="infomationInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AdminInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AdminLogin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainwindow.h">
@@ -69,6 +75,12 @@
     <QtMoc Include="infomationInput.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="AdminInfo.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="AdminLogin.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="mainwindow.ui">
@@ -78,6 +90,12 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="infomationInput.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="AdminInfo.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="AdminLogin.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

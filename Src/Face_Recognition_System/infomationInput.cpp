@@ -98,7 +98,7 @@ void infomationInput::on_btnSure_clicked()
 	//获取当前系统时间
 	QDateTime time = QDateTime::currentDateTime();
 	//时间格式
-	QString str = time.toString("yyyy-MM-dd hh:mm");
+	QString str = time.toString("yyyy-MM-dd hh:mm:ss");
 	//参数数组赋值
 	QString args[5] = { ui->info_Id->text(),ui->info_Name->text(),ui->info_Department->text(),ui->info_Post->text(),str };
 	//创建数据查询对象
