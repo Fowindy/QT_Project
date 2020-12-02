@@ -20,6 +20,8 @@ private slots:
 	void on_btnReturn_clicked();
 	//增加员工按钮槽函数
 	void on_btnAddWorker_clicked();
+	//删除员工按钮槽函数
+	void on_btnDelWorker_clicked();
 signals:
 	//向外界发射信号
 	void adminInfoSignal();
