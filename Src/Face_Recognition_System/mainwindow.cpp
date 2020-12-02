@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(mKaoQin, SIGNAL(KaoQinSignal()), this, SLOT(show()));
 	//信息界面连接信号和槽
 	connect(mInfo, SIGNAL(infoSignal()), this, SLOT(show()));
+	//管理界面连接信号和槽
+	connect(m_AdminInfo, SIGNAL(adminInfoSignal()), this, SLOT(show()));
 	//实例化人脸识别对象
 	m_Face = new FaceRecognition_Qt("VB5zp8jnFjLf6wjLtw4lbnme", "ohlu3eO12VMs1qKT8MiSGxb3hShmUyfj");
 	//刷新Token

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <QWidget>
 namespace Ui { class AdminInfo; };
@@ -13,4 +13,10 @@ public:
 
 private:
 	Ui::AdminInfo *ui;
+private slots:
+	//返回按钮槽函数
+	void on_btnReturn_clicked();
+signals:
+	//向外界发射信号
+	void adminInfoSignal();
 };
