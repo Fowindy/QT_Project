@@ -93,6 +93,8 @@ public:
 
 
         retranslateUi(AdminLogin);
+        QObject::connect(buttonBox, SIGNAL(accepted()), AdminLogin, SLOT(accept()));
+        QObject::connect(buttonBox, SIGNAL(rejected()), AdminLogin, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(AdminLogin);
     } // setupUi

@@ -219,7 +219,6 @@ void MainWindow::on_btnAdminLogin_clicked()
 		m_Login->exec();
 		result = m_Login->GetLoginResult();
 	}
-	//m_Login->hide();
 	m_AdminInfo->show();
 }
 

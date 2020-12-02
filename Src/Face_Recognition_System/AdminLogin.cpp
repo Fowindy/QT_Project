@@ -11,8 +11,8 @@ AdminLogin::AdminLogin(QWidget *parent)
 	m_PassWord = "123";
 	m_LoginResult = LOGIN_ERROR;
 	//连接Ok和Cancel按钮的信号和槽
-	connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(OnOKBtn()));
-	connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(OnCancelBtn()));
+	connect(this, SIGNAL(accepted()), this, SLOT(OnOKBtn()));
+	connect(this, SIGNAL(rejected()), this, SLOT(OnCancelBtn()));
 }
 
 AdminLogin::~AdminLogin()
