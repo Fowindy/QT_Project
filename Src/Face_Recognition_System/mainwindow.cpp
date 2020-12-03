@@ -220,7 +220,7 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 			{
 				qDebug() << "人脸信息录入成功";
 				//弹出录入其他信息的对话框
-				QMessageBox::information(NULL, "完成", "您的人脸信息已经录入！请录入其他信息！",
+				QMessageBox::information(NULL, "完成", "您的人脸信息已经识别成功！请录入其他信息！",
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 				//隐藏当前窗口
 				this->hide();
@@ -278,7 +278,8 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 				QString sql = QString("SELECT * FROM worker WHERE id='%1'").arg(success);
 				//执行查询命令
 				query.exec(sql);
-				if (query.size() != -1)
+				int b = query.at();
+				if (query.at() != -2)
 				{
 					QString strTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 					while (query.next())	//查询结果下一条不为空则继续
