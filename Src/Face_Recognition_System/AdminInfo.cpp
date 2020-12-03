@@ -17,6 +17,7 @@ AdminInfo::AdminInfo(QWidget *parent)
 	m_infoInput = new infomationInput();
 	//连接用户输入界面的信号和槽
 	connect(m_infoInput, SIGNAL(adminInfoSignal()), this, SLOT(show()));
+	ui->btnRefreshTable->clicked();
 }
 
 AdminInfo::~AdminInfo()
