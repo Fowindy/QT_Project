@@ -15,12 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
 	, ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	//实例化信息界面对象
+	mInfo = new infomationInput();
 	//实例化管理对象
 	m_AdminInfo = new AdminInfo();
 	//实例化考勤对象
 	mKaoQin = new KaoQin();
-	//实例化信息界面对象
-	mInfo = new infomationInput();
 	//KaoQin对象连接信号和槽_KaoQin页面返回按钮显示首页
 	connect(mKaoQin, SIGNAL(KaoQinSignal()), this, SLOT(show()));
 	//管理界面连接信号和槽
