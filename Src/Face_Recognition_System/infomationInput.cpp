@@ -15,7 +15,7 @@ infomationInput::infomationInput(QWidget *parent)
 	//灰色信息提示
 	ui->info_Department->setPlaceholderText("请输入部门全称");
 	ui->info_Name->setPlaceholderText("请输入姓名");
-	ui->info_Id->setPlaceholderText("请输入工号");
+	ui->info_Id->setPlaceholderText("请输入工号,工号必须与目标一致");
 	ui->info_Post->setPlaceholderText("请输入职位");
 }
 

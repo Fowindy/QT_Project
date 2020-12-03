@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <QDialog>
+#include "infomationInput.h"
 namespace Ui { class AdminLogin; };
 #define LOGIN_SUCCEED		1	//登录成功
 #define LOGIN_ERROR_NAME	2	//用户名错误
@@ -22,6 +23,7 @@ private slots:
 
 private:
 	Ui::AdminLogin *ui;
+	infomationInput *mInfo;	//信息页面对象
 	int m_LoginResult;	//登录结果
 	QString m_UserName;	//用户名
 	QString m_PassWord;	//密码

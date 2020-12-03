@@ -23,8 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
 	mInfo = new infomationInput();
 	//KaoQin对象连接信号和槽_KaoQin页面返回按钮显示首页
 	connect(mKaoQin, SIGNAL(KaoQinSignal()), this, SLOT(show()));
-	//信息界面连接信号和槽
-	connect(mInfo, SIGNAL(infoSignal()), this, SLOT(show()));
 	//管理界面连接信号和槽
 	connect(m_AdminInfo, SIGNAL(adminInfoSignal()), this, SLOT(show()));
 	//实例化人脸识别对象
@@ -278,7 +276,6 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 				QString sql = QString("SELECT * FROM worker WHERE id='%1'").arg(success);
 				//执行查询命令
 				query.exec(sql);
-				int b = query.at();
 				if (query.at() != -2)
 				{
 					QString strTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");

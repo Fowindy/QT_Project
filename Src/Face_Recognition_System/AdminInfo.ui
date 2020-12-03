@@ -80,6 +80,13 @@
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="btnModifyWorker">
+      <property name="text">
+       <string>修改员工信息</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="btnRefreshTable">
       <property name="text">
        <string>刷新列表</string>

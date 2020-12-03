@@ -6,6 +6,8 @@ AdminLogin::AdminLogin(QWidget *parent)
 	ui(new Ui::AdminLogin)
 {
 	ui->setupUi(this);
+	//实例化信息界面对象
+	mInfo = new infomationInput();
 	//初始化默认用户名和密码为123
 	m_UserName = "123";
 	m_PassWord = "123";
@@ -13,6 +15,9 @@ AdminLogin::AdminLogin(QWidget *parent)
 	//连接Ok和Cancel按钮的信号和槽
 	connect(this, SIGNAL(accepted()), this, SLOT(OnOKBtn()));
 	connect(this, SIGNAL(rejected()), this, SLOT(OnCancelBtn()));
+	//连接信息输入界面返回的信号和槽
+	//[问题]同一个infoSignal怎样响应多个槽函数
+	connect(mInfo, SIGNAL(infoSignal()), this, SLOT(show()));
 }
 
 AdminLogin::~AdminLogin()

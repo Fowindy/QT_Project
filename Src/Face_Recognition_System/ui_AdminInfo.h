@@ -27,6 +27,7 @@ public:
     QVBoxLayout *verticalLayout;
     QPushButton *btnAddWorker;
     QPushButton *btnDelWorker;
+    QPushButton *btnModifyWorker;
     QPushButton *btnRefreshTable;
     QPushButton *btnReturn;
 
@@ -69,6 +70,11 @@ public:
 
         verticalLayout->addWidget(btnDelWorker);
 
+        btnModifyWorker = new QPushButton(layoutWidget);
+        btnModifyWorker->setObjectName(QString::fromUtf8("btnModifyWorker"));
+
+        verticalLayout->addWidget(btnModifyWorker);
+
         btnRefreshTable = new QPushButton(layoutWidget);
         btnRefreshTable->setObjectName(QString::fromUtf8("btnRefreshTable"));
 
@@ -98,6 +104,7 @@ public:
         ___qtablewidgetitem3->setText(QCoreApplication::translate("AdminInfo", "\350\201\214\344\275\215", nullptr));
         btnAddWorker->setText(QCoreApplication::translate("AdminInfo", "\345\242\236\345\212\240\345\221\230\345\267\245\344\277\241\346\201\257", nullptr));
         btnDelWorker->setText(QCoreApplication::translate("AdminInfo", "\345\210\240\351\231\244\345\221\230\345\267\245\344\277\241\346\201\257", nullptr));
+        btnModifyWorker->setText(QCoreApplication::translate("AdminInfo", "\344\277\256\346\224\271\345\221\230\345\267\245\344\277\241\346\201\257", nullptr));
         btnRefreshTable->setText(QCoreApplication::translate("AdminInfo", "\345\210\267\346\226\260\345\210\227\350\241\250", nullptr));
         btnReturn->setText(QCoreApplication::translate("AdminInfo", "\350\277\224\345\233\236", nullptr));
     } // retranslateUi
