@@ -240,15 +240,15 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 		{
 			//调用人脸搜索
 			int success = m_Face->IdentifyFace(imgData);
-			temp = success;
 			if (!success)
 			{
 				qDebug() << "比对失败";
-				QMessageBox::information(NULL, "错误", "打卡失败，人脸信息不匹配或人脸库中查无此人，请先注册！",
+				QMessageBox::information(NULL, "错误", "打卡失败，人脸库中查无此人，请先注册人脸！",
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 			}
 			else	//比对成功
 			{
+				temp = success;
 				//打开数据库
 				QSqlDatabase database;
 				//如果数据库已经存在,则直接采用
@@ -278,41 +278,49 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 				QString sql = QString("SELECT * FROM worker WHERE id='%1'").arg(success);
 				//执行查询命令
 				query.exec(sql);
-				QString strTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-				while (query.next())	//查询结果下一条不为空则继续
+				if (query.size() != -1)
 				{
+					QString strTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+					while (query.next())	//查询结果下一条不为空则继续
+					{
 #pragma region 解析获取的结果
-					QString id = query.value(0).toString();
-					QString name = query.value(1).toString();
-					QString department = query.value(2).toString();
-					QString post = query.value(3).toString();
-					QString time = query.value(4).toString();
+						QString id = query.value(0).toString();
+						QString name = query.value(1).toString();
+						QString department = query.value(2).toString();
+						QString post = query.value(3).toString();
+						QString time = query.value(4).toString();
 #pragma endregion
-					qDebug() << id << name << department << post << time;
+						qDebug() << id << name << department << post << time;
 #pragma region 同步到界面显示
-					ui->kq_id->setText(id);
-					ui->kq_department->setText(department);
-					ui->kq_name->setText(name);
-					ui->kq_post->setText(post);
-					ui->kq_time->setText(strTime);
+						ui->kq_id->setText(id);
+						ui->kq_department->setText(department);
+						ui->kq_name->setText(name);
+						ui->kq_post->setText(post);
+						ui->kq_time->setText(strTime);
 #pragma endregion
-				}
-				qDebug() << "比对成功";
-				//更新查询语句
-				sql = QString("UPDATE worker SET time = '%1' WHERE id = '%2'").arg(strTime).arg(temp);
-				//修改操作
-				query.prepare(sql);
-				//如果执行失败
-				if (!query.exec())
-				{
-					qDebug() << "打卡时间更新失败！" << query.lastError();
+					}
+					qDebug() << "比对成功";
+					//更新查询语句
+					sql = QString("UPDATE worker SET time = '%1' WHERE id = '%2'").arg(strTime).arg(temp);
+					//修改操作
+					query.prepare(sql);
+					//如果执行失败
+					if (!query.exec())
+					{
+						qDebug() << "打卡时间更新失败！" << query.lastError();
+					}
+					else
+					{
+						qDebug("打卡时间更新成功");
+					}
+					QMessageBox::information(NULL, "完成", "打卡成功！",
+						QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 				}
 				else
 				{
-					qDebug("打卡时间更新成功");
+					QMessageBox::information(NULL, "失败", "打卡失败!请先注册此人信息!",
+						QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 				}
-				QMessageBox::information(NULL, "完成", "打卡成功！",
-					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 				database.close();
 				m_camera->stop();
 				QThread::sleep(3);
