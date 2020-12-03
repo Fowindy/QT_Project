@@ -218,20 +218,33 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 			bool ok;
 			//弹出输入学号的对话框
 			QString text = QInputDialog::getText(this, tr("User_Id"), tr("请输入学号"), QLineEdit::Password, 0, &ok);
+			if (!ok)
+			{
+				return 1;
+			}
 			//如果录入信息为空,则提示继续输入
 			while (text.isEmpty())
 			{
-				QMessageBox::information(NULL, "错误", "请输入正确的学号!",
+				int res = QMessageBox::information(NULL, "错误", "请输入正确的学号!",
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-				text = QInputDialog::getText(this, tr("User_Id"), tr("请输入学号"), QLineEdit::Password, 0, &ok);
+				if (res == QMessageBox::No)
+				{
+					return 1;
+				}
+				else
+				{
+					text = QInputDialog::getText(this, tr("User_Id"), tr("请输入学号"), QLineEdit::Password, 0, &ok);
+				}
 			}
 			//人脸接口返回true提示人脸信息录入成功
 			if (m_Face->RegisterMember(imgData, text))
 			{
 				qDebug() << "人脸信息录入成功";
 				//弹出录入其他信息的对话框
-				QMessageBox::information(NULL, "完成", "您的人脸信息已经识别成功！请录入其他信息！",
-					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+				//QMessageBox提示1.5秒无操作自动关闭
+				QMessageBox *box = new QMessageBox(QMessageBox::Information, tr("完成"), tr("您的人脸信息已经识别成功！请录入其他信息！"));
+				QTimer::singleShot(1500, box, SLOT(accept()));
+				box->exec();
 				//隐藏当前窗口
 				this->hide();
 				//显示信息窗口
