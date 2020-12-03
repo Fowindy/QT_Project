@@ -9,6 +9,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QThread>
+#include <QObject>
 static int temp = 0;
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -166,12 +167,23 @@ void MainWindow::on_btnAdminLogin_clicked()
 	m_Login->exec();
 	int result = m_Login->GetLoginResult();
 	while (result != LOGIN_SUCCEED) {
-		QMessageBox::information(NULL, "错误", "管理员密码错误，请重新输入",
+		int res = QMessageBox::information(NULL, "错误", "管理员密码错误，请重新输入",
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-		m_Login->exec();
-		result = m_Login->GetLoginResult();
+		if (res == QMessageBox::No)
+		{
+			this->show();
+			break;
+		}
+		else
+		{
+			m_Login->exec();
+			result = m_Login->GetLoginResult();
+		}
 	}
-	m_AdminInfo->show();
+	if (result == LOGIN_SUCCEED)
+	{
+		m_AdminInfo->show();
+	}
 }
 
 /************************************
