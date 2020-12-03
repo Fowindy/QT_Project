@@ -16,8 +16,6 @@ AdminInfo::AdminInfo(QWidget *parent)
 	ui->setupUi(this);
 	//实例化用户信息输入界面
 	m_infoInput = new infomationInput();
-	//连接用户输入界面的信号和槽
-	connect(m_infoInput, SIGNAL(adminInfoSignal()), this, SLOT(show()));
 	//连接信息输入界面返回的信号和槽
 	//[问题解决]:父窗口搞错了
 	connect(m_infoInput, SIGNAL(infoSignal()), this, SLOT(show()));
@@ -133,43 +131,24 @@ void AdminInfo::on_btnDelWorker_clicked()
 *************************************/
 void AdminInfo::on_btnModifyWorker_clicked()
 {
-	bool result;
-	//弹出输入工号的对话框
-	QString text = QInputDialog::getText(this, tr("User_Id"), tr("请输入工号"), QLineEdit::Password, 0, &result);
-	//判断输入是否为空
-	if (text.isEmpty())
+#pragma region 获取选中行某列内容
+	QString info[4];
+	//获取选中行所有列项
+	QList<QTableWidgetItem*> items = ui->worker->selectedItems();
+	if (items.size() == 0)
 	{
-		QMessageBox::information(NULL, "错误:工号不能为空", "请输入正确的工号!", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-	}
-	//创建数据库对象
-	QSqlDatabase database;
-	//如果已存在则直接使用
-	if (QSqlDatabase::contains("qt_sql_default_connection"))
-	{
-		database = QSqlDatabase::database("qt_sql_default_connection");
-	}
-	else	//不存在则新建
-	{
-		database = QSqlDatabase::addDatabase("QSQLITE");
-		//数据库命名
-		database.setDatabaseName("MyDataBase.db");
-		//设置数据库用户名和密码
-		database.setUserName("123456");
-		database.setPassword("123456");
-	}
-	//数据库打开失败
-	if (!database.open())
-	{
-		qDebug() << "错误:数据库连接失败..." << database.lastError();
+		QMessageBox::information(NULL, "错误", "请先选中要修改的行!");
+		return;
 	}
 	else
 	{
-		qDebug() << "数据库连接成功!...";
+		//获取要修改行信息存储到字符数组
+		for (int i = 0; i < items.size(); i++)
+		{
+			info[i] = items.at(i)->text();
+		}
 	}
-	//创建数据库查询对象
-	QSqlQuery query;
-	QMessageBox::information(NULL, "完成", "工号输入正确,请输入其他信息！",
-		QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+#pragma endregion
 	//隐藏当前窗口
 	this->hide();
 	//显示信息窗口
