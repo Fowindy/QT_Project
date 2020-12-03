@@ -323,8 +323,10 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 					{
 						qDebug("打卡时间更新成功");
 					}
-					QMessageBox::information(NULL, "完成", "打卡成功！",
-						QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+					//QMessageBox提示1.5秒无操作自动关闭
+					QMessageBox *box = new QMessageBox(QMessageBox::Information, tr("完成"), tr("打卡成功"));
+					QTimer::singleShot(1500, box, SLOT(accept()));
+					box->exec();
 				}
 				else
 				{
