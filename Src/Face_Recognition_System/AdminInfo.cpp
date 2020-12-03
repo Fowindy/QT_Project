@@ -8,17 +8,12 @@
 #include <QDebug>
 #include <QSqlError>
 
-
+QString info[4];
 AdminInfo::AdminInfo(QWidget *parent)
 	: QWidget(parent)
 {
 	ui = new Ui::AdminInfo();
 	ui->setupUi(this);
-	//实例化用户信息输入界面
-	m_infoInput = new infomationInput();
-	//连接信息输入界面返回的信号和槽
-	//[问题解决]:父窗口搞错了
-	connect(m_infoInput, SIGNAL(infoSignal()), this, SLOT(show()));
 	ui->btnRefreshTable->clicked();
 }
 
@@ -55,6 +50,13 @@ void AdminInfo::on_btnAddWorker_clicked()
 {
 	//隐藏当前界面
 	this->hide();
+	//新增员工时清楚缓存信息
+	info->clear();
+	//实例化用户信息输入界面
+	m_infoInput = new infomationInput();
+	//连接信息输入界面返回的信号和槽
+	//[问题解决]:父窗口搞错了
+	connect(m_infoInput, SIGNAL(infoSignal()), this, SLOT(show()));
 	//弹出用户信息输入界面
 	m_infoInput->show();
 }
@@ -132,7 +134,6 @@ void AdminInfo::on_btnDelWorker_clicked()
 void AdminInfo::on_btnModifyWorker_clicked()
 {
 #pragma region 获取选中行某列内容
-	QString info[4];
 	//获取选中行所有列项
 	QList<QTableWidgetItem*> items = ui->worker->selectedItems();
 	if (items.size() == 0)
@@ -151,6 +152,8 @@ void AdminInfo::on_btnModifyWorker_clicked()
 #pragma endregion
 	//隐藏当前窗口
 	this->hide();
+	m_infoInput = new infomationInput();
+	connect(m_infoInput, SIGNAL(infoSignal()), this, SLOT(show()));
 	//显示信息窗口
 	m_infoInput->show();
 }
