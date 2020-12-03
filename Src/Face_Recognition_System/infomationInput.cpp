@@ -24,6 +24,7 @@ infomationInput::infomationInput(QWidget *parent)
 	{
 		ui->info_Department->setText(info[2]);
 		ui->info_Name->setText(info[1]);
+		ui->info_Id->setReadOnly(true);
 		ui->info_Id->setText(info[0]);
 		ui->info_Post->setText(info[3]);
 	}
@@ -113,10 +114,17 @@ void infomationInput::on_btnSure_clicked()
 	//参数数组赋值
 	QString args[5] = { ui->info_Id->text(),ui->info_Name->text(),ui->info_Department->text(),ui->info_Post->text(),str };
 	//创建数据查询对象
-	//QSqlQuery query;
-	//拼接插入数据语句
-	QString sql = QString("insert into worker values('%1','%2','%3','%4','%5')").arg(args[0]).arg(args[1]).arg(args[2]).arg(args[3]).arg(args[4]);
-
+	QString sql;
+	if (info->size() != 0)
+	{
+		sql = QString("UPDATE worker SET name = '%1',department = '%2',post = '%3'"
+			"WHERE id = '%4'").arg(args[1]).arg(args[2]).arg(args[3]).arg(args[0]);
+	}
+	else
+	{
+		//拼接插入数据语句
+		sql = QString("insert into worker values('%1','%2','%3','%4','%5')").arg(args[0]).arg(args[1]).arg(args[2]).arg(args[3]).arg(args[4]);
+	}
 	//插入sql语句到数据表
 	sql_query.prepare(sql);
 	//判断插入是否成功
