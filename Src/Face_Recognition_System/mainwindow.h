@@ -46,5 +46,7 @@ private slots:
 	void on_btnAdminLogin_clicked();	//管理员登录按钮
 	int cameraImageCaptured(int index, QImage image);	//采图槽函数
 	void timerUpdate(void);	//更新时间
+signals:
+	void sendId(QString);
 };
 #endif // MAINWINDOW_H

@@ -74,6 +74,48 @@ void AdminInfo::on_btnDelWorker_clicked()
 	{
 		QMessageBox::information(NULL, "错误:工号不能为空", "请输入正确的工号!", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 	}
+	//创建数据库对象
+	QSqlDatabase database;
+	//如果已存在则直接使用
+	if (QSqlDatabase::contains("qt_sql_default_connection"))
+	{
+		database = QSqlDatabase::database("qt_sql_default_connection");
+	}
+	else	//不存在则新建
+	{
+		database = QSqlDatabase::addDatabase("QSQLITE");
+		//数据库命名
+		database.setDatabaseName("MyDataBase.db");
+		//设置数据库用户名和密码
+		database.setUserName("123456");
+		database.setPassword("123456");
+	}
+	//数据库打开失败
+	if (!database.open())
+	{
+		qDebug() << "错误:数据库连接失败..." << database.lastError();
+	}
+	else
+	{
+		qDebug() << "数据库连接成功!...";
+	}
+	//创建数据库查询对象
+	QSqlQuery query;
+	//拼接删除数据的sql语句
+	QString sql = QString("DELETE FROM worker WHERE id = '%1'").arg(text);
+	//
+	query.prepare(sql);
+	if (!query.exec())
+	{
+		qDebug() << "删除数据失败！" << query.lastError();
+	}
+	else
+	{
+		qDebug("删除数据成功!");
+	}
+	database.close();
+	//再刷新
+	ui->btnRefreshTable->clicked();
 }
 
 /************************************

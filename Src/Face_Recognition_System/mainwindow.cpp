@@ -125,56 +125,8 @@ void MainWindow::on_btnWorkerInfoCaptured_clicked()
 *************************************/
 void MainWindow::on_btnCheckIn_clicked()
 {
-	//刷新采图
+	//触发采图比对人脸
 	m_cameraImageCapture->capture();
-	qDebug() << "正在进行人脸比对.";
-	//创建数据库对象
-	QSqlDatabase database;
-	//如果数据库已存在,则直接使用
-	if (QSqlDatabase::contains("qt_sql_default_connection"))
-	{
-		database = QSqlDatabase::database("qt_sql_default_connection");
-	}
-	else	//不存在则新建数据库
-	{
-		database = QSqlDatabase::addDatabase("QSQLITE");
-		database.setDatabaseName("MyDataBase.db");
-		database.setUserName("123456");
-		database.setPassword("123456");
-	}
-	//如果数据库打开失败
-	if (!database.open())
-	{
-		qDebug() << "错误:数据库打开失败..." << database.lastError();
-
-	}
-	//数据库打开成功
-	else
-	{
-		qDebug() << "数据库打开成功...";
-	}
-	//获取当前打卡系统时间
-	QDateTime time = QDateTime::currentDateTime();
-	//设定时间格式
-	QString str = time.toString("yyyy-MM-dd hh:mm:ss");
-	//创建查询对象
-	QSqlQuery query;
-	//更新查询语句
-	QString sql = QString("UPDATE worker SET time = '%1' WHERE id = '%2'").arg(str).arg(temp);
-	//修改操作
-	query.prepare(sql);
-	//如果执行失败
-	if (!query.exec())
-	{
-		qDebug() << "打卡时间更新失败！" << query.lastError();
-	}
-	else
-	{
-		qDebug("打卡时间更新成功");
-	}
-	//关闭数据库
-	database.close();
-	//切换事件状态为登录
 	m_ControlType = LOGIN_TYPE;
 }
 
@@ -292,7 +244,7 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 			if (!success)
 			{
 				qDebug() << "比对失败";
-				QMessageBox::information(NULL, "错误", "打卡失败，人脸信息不匹配或人脸库中查无此人，请重新打卡！",
+				QMessageBox::information(NULL, "错误", "打卡失败，人脸信息不匹配或人脸库中查无此人，请先注册！",
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 			}
 			else	//比对成功
