@@ -323,6 +323,8 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 					{
 						qDebug("打卡时间更新成功");
 					}
+					//释放查询查询对象,避免紊乱
+					query.clear();
 					//QMessageBox提示1.5秒无操作自动关闭
 					QMessageBox *box = new QMessageBox(QMessageBox::Information, tr("完成"), tr("打卡成功"));
 					QTimer::singleShot(1500, box, SLOT(accept()));
@@ -335,7 +337,7 @@ int MainWindow::cameraImageCaptured(int index, QImage image)
 				}
 				database.close();
 				m_camera->stop();
-				QThread::sleep(3);
+				QThread::sleep(2);
 				m_camera->start();
 			}
 		}
