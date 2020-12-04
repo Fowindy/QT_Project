@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QThread>
 QString toShowInfo;
+double compareScore;
 /************************************
 *@Method:    FaceRecognition_Qt
 *@Access:    public
@@ -25,6 +26,10 @@ FaceRecognition_Qt::FaceRecognition_Qt(const QString &apiKey, const QString &sec
 	detectManager = new QNetworkAccessManager(this);
 	//网络管理对象信号和槽
 	connect(detectManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyDetectFinished(QNetworkReply*)));
+	//实例化网络管理对象
+	compareManager = new QNetworkAccessManager(this);
+	//网络管理对象信号和槽
+	connect(compareManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyCompareFinished(QNetworkReply*)));
 }
 
 /************************************
@@ -150,6 +155,39 @@ void FaceRecognition_Qt::DetectFace(QString qstrImage)
 	detectManager->post(request, postParam);
 }
 
+/************************************
+*@Method:    CompareFace
+*@Access:    public
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Parameter: QString qstrImage1
+*@Parameter: QString qstrImage2
+*@Created:   2020/12/04 17:35
+*@Describe:	 人像比对
+*************************************/
+void FaceRecognition_Qt::CompareFace(QString qstrImage1, QString qstrImage2)
+{
+	//拼接人脸比对的url_自动获取Token方式
+	QUrl url("https://aip.baidubce.com/rest/2.0/face/v3/match?access_token=" + m_token);
+	//创建请求对象
+	QNetworkRequest request(url);
+	//设置数据提交格式，这个不能自己随便写，每个平台的格式可能不一样，百度AI要求的格式为application/json
+	request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+
+	QJsonObject obj1, obj2;
+	QJsonArray arr;
+	obj1.insert("image", qstrImage1);
+	obj1.insert("image_type", "BASE64");
+	obj2.insert("image", qstrImage2);
+	obj2.insert("image_type", "BASE64");
+
+	arr.append(obj1);
+	arr.append(obj2);
+
+	QByteArray postParam = QJsonDocument(arr).toJson();
+	compareManager->post(request, postParam);
+}
+
 FaceRecognition_Qt::~FaceRecognition_Qt()
 {
 }
@@ -235,6 +273,38 @@ void FaceRecognition_Qt::jsonDetectDataParser(QByteArray &replyData)
 	}
 	qDebug() << "toShowInfo:" << toShowInfo;
 	emit(CanShowResult());
+}
+
+void FaceRecognition_Qt::jsonCompareDataParser(QByteArray &replyData)
+{
+	QJsonParseError err;
+	QJsonDocument doc = QJsonDocument::fromJson(replyData, &err);
+	QString toShowInfo;
+	if (err.error == QJsonParseError::NoError) {
+		if (doc.isObject()) {
+			QJsonObject obj = doc.object();
+			if (obj.contains("result")) {
+				QJsonObject resultObj = obj.take("result").toObject();
+				if (resultObj.contains("score")) {
+					compareScore = resultObj.take("score").toDouble();
+					qDebug() << "相似度为：" << compareScore;
+					emit(showCompareResult());
+				}
+			}
+		}
+	}
+}
+
+void FaceRecognition_Qt::replyCompareFinished(QNetworkReply *reply)
+{
+	qDebug() << "replyCompareFinished IN";
+	QByteArray replyData = reply->readAll();
+	reply->close();
+	qDebug() << "reply data is:" << QString(replyData);
+
+	jsonCompareDataParser(replyData);
+
+	qDebug() << "replyCompareFinished OUT";
 }
 
 /************************************

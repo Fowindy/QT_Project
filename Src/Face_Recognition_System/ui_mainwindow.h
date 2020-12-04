@@ -83,6 +83,7 @@ public:
     QLabel *lb_pic1;
     QLabel *lb_pic2;
     QPushButton *btn_startCompare;
+    QLabel *lbCompareResult;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -296,6 +297,9 @@ public:
         btn_startCompare = new QPushButton(tab_3);
         btn_startCompare->setObjectName(QString::fromUtf8("btn_startCompare"));
         btn_startCompare->setGeometry(QRect(290, 410, 75, 23));
+        lbCompareResult = new QLabel(tab_3);
+        lbCompareResult->setObjectName(QString::fromUtf8("lbCompareResult"));
+        lbCompareResult->setGeometry(QRect(390, 450, 211, 31));
         tabWidget->addTab(tab_3, QString());
 
         gridLayout->addWidget(tabWidget, 0, 0, 1, 1);
@@ -344,6 +348,7 @@ public:
         lb_pic1->setText(QString());
         lb_pic2->setText(QString());
         btn_startCompare->setText(QCoreApplication::translate("MainWindow", "\345\274\200\345\247\213\346\257\224\345\257\271", nullptr));
+        lbCompareResult->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "\344\272\272\350\204\270\346\257\224\345\257\271\347\263\273\347\273\237", nullptr));
     } // retranslateUi
 

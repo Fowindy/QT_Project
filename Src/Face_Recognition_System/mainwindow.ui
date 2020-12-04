@@ -493,6 +493,19 @@
          <string>开始比对</string>
         </property>
        </widget>
+       <widget class="QLabel" name="lbCompareResult">
+        <property name="geometry">
+         <rect>
+          <x>390</x>
+          <y>450</y>
+          <width>211</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>

@@ -39,6 +39,8 @@ private:
 	int m_ControlType;	//事件类型
 	infomationInput *mInfo;	//信息页面对象
 	QImage* img;	//照片对象
+	QImage* compareImg1;	//比对照片对象1
+	QImage* compareImg2;	//比对照片对象2
 
 	void showImage(QString &imageName, QLabel* &position, QImage* &img);	//显示图片方法
 	void postDetectData(QString qstrImg);
@@ -53,7 +55,11 @@ private slots:
 	void timerUpdate(void);	//更新时间
 	void on_btnChooseImageDetect_clicked();	//颜值评分界面选择图片
 	void on_btnDetect_clicked();	//人脸检测按钮
-	void showDetectResult();
+	void showDetectResult();	//人脸检测槽函数
+	void on_btnChoosePictureBefore_clicked();	//选择照片1按钮
+	void on_btnChoosePictureAfter_clicked();	//选择照片2按钮
+	void on_btn_startCompare_clicked(); //比较按钮
+	void showCompareResult();	//人脸比对槽函数
 signals:
 	void sendId(QString);
 };

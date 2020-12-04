@@ -12,6 +12,7 @@
 #include <QObject>
 #include <QFileDialog>
 extern QString toShowInfo;
+extern double compareScore;
 static int temp = 0;
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -473,5 +474,98 @@ void MainWindow::on_btnDetect_clicked()
 void MainWindow::showDetectResult()
 {
 	ui->textBrowser->setText(toShowInfo);
+}
+
+/************************************
+*@Method:    on_btnChoosePictureBefore_clicked
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/12/04 17:27
+*@Describe:	 选择照片1按钮
+*************************************/
+void MainWindow::on_btnChoosePictureBefore_clicked()
+{
+	QString imageName;
+	imageName = QFileDialog::getOpenFileName(this,
+		"选择图片",
+		"",
+		tr("Images (*.png *.bmp *.jpg *.tif *.GIF )"));
+	qDebug() << "imageName:" << imageName;
+
+	if (imageName.isEmpty()) {
+		qWarning() << "image is empty.";
+		return;
+	}
+
+	showImage(imageName, ui->lb_pic1, compareImg1);
+}
+
+/************************************
+*@Method:    on_btnChoosePictureAfter_clicked
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/12/04 17:27
+*@Describe:	 选择照片2按钮
+*************************************/
+void MainWindow::on_btnChoosePictureAfter_clicked()
+{
+	QString imageName;
+	imageName = QFileDialog::getOpenFileName(this,
+		"选择图片",
+		"",
+		tr("Images (*.png *.bmp *.jpg *.tif *.GIF )"));
+	qDebug() << "imageName:" << imageName;
+
+	if (imageName.isEmpty()) {
+		qWarning() << "image is empty.";
+		return;
+	}
+
+	showImage(imageName, ui->lb_pic2, compareImg2);
+}
+
+void MainWindow::on_btn_startCompare_clicked()
+{
+	qDebug() << "on_btn_startCompare_clicked IN";
+	// 图片进行base64编码
+	QByteArray ba1, ba2;
+	QString qstrImg1, qstrImg2;
+	QBuffer buffer1(&ba1), buffer2(&ba2);
+	buffer1.open(QIODevice::WriteOnly);
+	buffer2.open(QIODevice::WriteOnly);
+
+	if (compareImg1 != nullptr) {
+		compareImg1->save(&buffer1, "jpg");
+		qstrImg1 = QString(ba1.toBase64());;
+	}
+
+	if (compareImg2 != nullptr) {
+		compareImg2->save(&buffer2, "jpg");
+		qstrImg2 = QString(ba2.toBase64());
+	}
+
+	buffer1.close();
+	buffer2.close();
+
+
+	//postCompareData(qstrImg1, qstrImg2);
+	m_Face->CompareFace(qstrImg1, qstrImg2);
+	connect(m_Face, SIGNAL(showCompareResult()), this, SLOT(showCompareResult()));
+	qDebug() << "on_btn_startCompare_clicked OUT";
+}
+
+/************************************
+*@Method:    showCompareResult
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/12/04 17:54
+*@Describe:	 人脸比对槽函数
+*************************************/
+void MainWindow::showCompareResult()
+{
+	ui->lbCompareResult->setText(QString("相似度为：%1").arg(compareScore));
 }
 
