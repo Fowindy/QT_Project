@@ -11,6 +11,7 @@ public:
 	FaceRecognition_Qt(const QString &apiKey, const QString &secretKey);	//返回相似度
 	bool RegisterMember(QString qStrImage, QString userId);	//注册人脸
 	int IdentifyFace(QString qstrImage);	//比对人脸
+	int DetectFace(QString qstrImage);	//颜值评分
 	~FaceRecognition_Qt();
 
 private:

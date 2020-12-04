@@ -93,6 +93,20 @@ void MainWindow::showImage(QString &imageName, QLabel* &position, QImage* &img)
 }
 
 /************************************
+*@Method:    postDetectData
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Parameter: QString qstrImg
+*@Created:   2020/12/04 14:30
+*@Describe:	 人脸检测
+*************************************/
+void MainWindow::postDetectData(QString qstrImg)
+{
+	qDebug() << "postData IN";
+}
+
+/************************************
 *@Method:    on_bExit_clicked
 *@Access:    private
 *@Returns:   void
@@ -420,5 +434,29 @@ void MainWindow::on_btnChooseImageDetect_clicked()
 	}
 	//显示图片
 	showImage(imageName, ui->lblDetectImage, img);
+}
+
+/************************************
+*@Method:    on_Button_clicked
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/12/04 14:21
+*@Describe:	 人脸检测按钮
+*************************************/
+void MainWindow::on_btnDetect_clicked()
+{
+	qDebug() << "人脸检测按钮按下";
+	//对图片进行base64转码
+	QByteArray ba;
+	QBuffer buffer(&ba);
+	ba.clear();
+	buffer.open(QIODevice::WriteOnly);
+	img->save(&buffer, "jpg");
+	QString qstrImg = QString(ba.toBase64());
+	qDebug() << "base64 len:" << qstrImg.length();
+	buffer.close();
+	postDetectData(qstrImg);
+	qDebug() << "on_btn_detect_clicked OUT";
 }
 

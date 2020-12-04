@@ -41,6 +41,7 @@ private:
 	QImage* img;	//照片对象
 
 	void showImage(QString &imageName, QLabel* &position, QImage* &img);	//显示图片方法
+	void postDetectData(QString qstrImg);
 private slots:
 	void on_btnExit_clicked();	//退出按钮
 	void on_btnCheckInRecord_clicked();	//考勤记录按钮
@@ -51,6 +52,7 @@ private slots:
 	int cameraImageCaptured(int index, QImage image);	//采图槽函数
 	void timerUpdate(void);	//更新时间
 	void on_btnChooseImageDetect_clicked();	//颜值评分界面选择图片
+	void on_btnDetect_clicked();	//人脸检测按钮
 signals:
 	void sendId(QString);
 };

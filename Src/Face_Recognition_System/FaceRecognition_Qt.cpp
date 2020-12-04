@@ -108,6 +108,23 @@ int FaceRecognition_Qt::IdentifyFace(QString qstrImage)
 	return false;
 }
 
+/************************************
+*@Method:    DetectFace
+*@Access:    public
+*@Returns:   int
+*@Author: 	  Fowindy
+*@Parameter: QString qstrImage
+*@Created:   2020/12/04 15:00
+*@Describe:	 颜值评分
+*************************************/
+int FaceRecognition_Qt::DetectFace(QString qstrImage)
+{
+	//拼接人脸搜素的url_自动获取Token方式
+	QUrl url("https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token=" + m_token);
+	//创建请求对象
+	QNetworkRequest request(url);
+}
+
 FaceRecognition_Qt::~FaceRecognition_Qt()
 {
 }
