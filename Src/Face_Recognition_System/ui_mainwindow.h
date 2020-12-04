@@ -22,6 +22,7 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -72,7 +73,16 @@ public:
     QVBoxLayout *cameraWindow;
     QLabel *dateTable;
     QWidget *tab_2;
+    QPushButton *btnChooseImageDetect;
+    QPushButton *btnDetect;
+    QTextBrowser *textBrowser;
+    QLabel *lblDetectImage;
     QWidget *tab_3;
+    QPushButton *btnChoosePictureBefore;
+    QPushButton *btnChoosePictureAfter;
+    QLabel *lb_pic1;
+    QLabel *lb_pic2;
+    QPushButton *btn_startCompare;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -256,9 +266,36 @@ public:
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
+        btnChooseImageDetect = new QPushButton(tab_2);
+        btnChooseImageDetect->setObjectName(QString::fromUtf8("btnChooseImageDetect"));
+        btnChooseImageDetect->setGeometry(QRect(70, 60, 75, 23));
+        btnDetect = new QPushButton(tab_2);
+        btnDetect->setObjectName(QString::fromUtf8("btnDetect"));
+        btnDetect->setGeometry(QRect(330, 60, 75, 23));
+        textBrowser = new QTextBrowser(tab_2);
+        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
+        textBrowser->setGeometry(QRect(330, 120, 361, 241));
+        lblDetectImage = new QLabel(tab_2);
+        lblDetectImage->setObjectName(QString::fromUtf8("lblDetectImage"));
+        lblDetectImage->setGeometry(QRect(20, 120, 291, 241));
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
+        btnChoosePictureBefore = new QPushButton(tab_3);
+        btnChoosePictureBefore->setObjectName(QString::fromUtf8("btnChoosePictureBefore"));
+        btnChoosePictureBefore->setGeometry(QRect(140, 50, 75, 23));
+        btnChoosePictureAfter = new QPushButton(tab_3);
+        btnChoosePictureAfter->setObjectName(QString::fromUtf8("btnChoosePictureAfter"));
+        btnChoosePictureAfter->setGeometry(QRect(400, 50, 75, 23));
+        lb_pic1 = new QLabel(tab_3);
+        lb_pic1->setObjectName(QString::fromUtf8("lb_pic1"));
+        lb_pic1->setGeometry(QRect(20, 100, 300, 280));
+        lb_pic2 = new QLabel(tab_3);
+        lb_pic2->setObjectName(QString::fromUtf8("lb_pic2"));
+        lb_pic2->setGeometry(QRect(350, 90, 300, 280));
+        btn_startCompare = new QPushButton(tab_3);
+        btn_startCompare->setObjectName(QString::fromUtf8("btn_startCompare"));
+        btn_startCompare->setGeometry(QRect(290, 410, 75, 23));
         tabWidget->addTab(tab_3, QString());
 
         gridLayout->addWidget(tabWidget, 0, 0, 1, 1);
@@ -298,7 +335,15 @@ public:
         btnExit->setText(QCoreApplication::translate("MainWindow", "\351\200\200\345\207\272", nullptr));
         dateTable->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "\344\272\272\350\204\270\350\200\203\345\213\244\347\263\273\347\273\237", nullptr));
+        btnChooseImageDetect->setText(QCoreApplication::translate("MainWindow", "\351\200\211\346\213\251\345\233\276\347\211\207", nullptr));
+        btnDetect->setText(QCoreApplication::translate("MainWindow", "\344\272\272\350\204\270\346\243\200\346\265\213", nullptr));
+        lblDetectImage->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "\351\242\234\345\200\274\350\257\204\345\210\206\347\263\273\347\273\237", nullptr));
+        btnChoosePictureBefore->setText(QCoreApplication::translate("MainWindow", "\351\200\211\346\213\251\345\233\276\347\211\2071", nullptr));
+        btnChoosePictureAfter->setText(QCoreApplication::translate("MainWindow", "\351\200\211\346\213\251\345\233\276\347\211\2072", nullptr));
+        lb_pic1->setText(QString());
+        lb_pic2->setText(QString());
+        btn_startCompare->setText(QCoreApplication::translate("MainWindow", "\345\274\200\345\247\213\346\257\224\345\257\271", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "\344\272\272\350\204\270\346\257\224\345\257\271\347\263\273\347\273\237", nullptr));
     } // retranslateUi
 

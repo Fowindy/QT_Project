@@ -374,11 +374,125 @@
        <attribute name="title">
         <string>颜值评分系统</string>
        </attribute>
+       <widget class="QPushButton" name="btnChooseImageDetect">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>60</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>选择图片</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnDetect">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>60</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>人脸检测</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>120</y>
+          <width>361</width>
+          <height>241</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lblDetectImage">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>120</y>
+          <width>291</width>
+          <height>241</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
         <string>人脸比对系统</string>
        </attribute>
+       <widget class="QPushButton" name="btnChoosePictureBefore">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>50</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>选择图片1</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnChoosePictureAfter">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>50</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>选择图片2</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lb_pic1">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>100</y>
+          <width>300</width>
+          <height>280</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lb_pic2">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>90</y>
+          <width>300</width>
+          <height>280</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_startCompare">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>410</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>开始比对</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>
