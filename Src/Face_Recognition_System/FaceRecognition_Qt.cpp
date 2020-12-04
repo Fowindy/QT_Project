@@ -119,6 +119,12 @@ int FaceRecognition_Qt::IdentifyFace(QString qstrImage)
 *************************************/
 int FaceRecognition_Qt::DetectFace(QString qstrImage)
 {
+#pragma region 地址拼接_不自动获取Token
+	//QString requestUrl = "https://aip.baidubce.com/rest/2.0/face/v3/detect";
+	//QString accessToken = "24.0e980fd20cd7534bcde1cd94d53ad734.2592000.1608978848.282335-23039406";
+	//QUrl url(requestUrl + "?access_token=" + accessToken);
+#pragma endregion
+
 	//拼接人脸搜素的url_自动获取Token方式
 	QUrl url("https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token=" + m_token);
 	//创建请求对象
