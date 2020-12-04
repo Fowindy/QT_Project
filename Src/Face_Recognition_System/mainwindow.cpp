@@ -10,10 +10,12 @@
 #include <QSqlError>
 #include <QThread>
 #include <QObject>
+#include <QFileDialog>
 static int temp = 0;
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow)
+	, img(nullptr)
 {
 	ui->setupUi(this);
 	//实例化信息界面对象
@@ -63,6 +65,31 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+/************************************
+*@Method:    showImage
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Parameter: QString & imageName
+*@Parameter: QLabel *  & position
+*@Parameter: QImage *  & img
+*@Created:   2020/12/04 13:06
+*@Describe:	 显示图片方法
+*************************************/
+void MainWindow::showImage(QString &imageName, QLabel* &position, QImage* &img)
+{
+	//通过图片地址实例化图片对象
+	img = new QImage(imageName);
+	//自适应窗口大小
+	QImage* fitImg = new QImage(img->scaled(
+		position->width(),
+		position->height(),
+		Qt::KeepAspectRatio	//图片缩放
+	));
+	//将图片显示在控件上
+	position->setPixmap(QPixmap::fromImage(*fitImg));
 }
 
 /************************************
@@ -372,5 +399,26 @@ void MainWindow::timerUpdate(void)
 	QDateTime time = QDateTime::currentDateTime();
 	QString str = time.toString("yyyy-MM-dd hh:mm:ss dddd");
 	ui->dateTable->setText(str);
+}
+
+/************************************
+*@Method:    on_btnChooseImageDetect_clicked
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/12/04 12:46
+*@Describe:	 颜值评分界面选择图片按钮
+*************************************/
+void MainWindow::on_btnChooseImageDetect_clicked()
+{
+	QString imageName;
+	imageName = QFileDialog::getOpenFileName(this, "选择图片", "", tr("Images (*.png *.bmp *.jpg *.tif *.GIF )"));
+	qDebug() << "imageName:" << imageName;
+	if (imageName.isEmpty()) {
+		qWarning() << "image is empty.";
+		return;
+	}
+	//显示图片
+	showImage(imageName, ui->lblDetectImage, img);
 }
 

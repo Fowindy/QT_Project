@@ -10,6 +10,8 @@
 #include "infomationInput.h"
 #include "AdminLogin.h"
 #include "AdminInfo.h"
+#include <QImage>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,7 +38,9 @@ private:
 	QCameraImageCapture *m_cameraImageCapture;	//截图部件
 	int m_ControlType;	//事件类型
 	infomationInput *mInfo;	//信息页面对象
+	QImage* img;	//照片对象
 
+	void showImage(QString &imageName, QLabel* &position, QImage* &img);	//显示图片方法
 private slots:
 	void on_btnExit_clicked();	//退出按钮
 	void on_btnCheckInRecord_clicked();	//考勤记录按钮
@@ -46,6 +50,7 @@ private slots:
 	void on_btnAdminLogin_clicked();	//管理员登录按钮
 	int cameraImageCaptured(int index, QImage image);	//采图槽函数
 	void timerUpdate(void);	//更新时间
+	void on_btnChooseImageDetect_clicked();	//颜值评分界面选择图片
 signals:
 	void sendId(QString);
 };
