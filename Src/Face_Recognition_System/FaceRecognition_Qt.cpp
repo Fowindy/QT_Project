@@ -5,7 +5,9 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
-
+#include <QDebug>
+#include <QThread>
+QString toShowInfo;
 /************************************
 *@Method:    FaceRecognition_Qt
 *@Access:    public
@@ -19,6 +21,10 @@
 FaceRecognition_Qt::FaceRecognition_Qt(const QString &apiKey, const QString &secretKey)
 	: m_apiKey(apiKey), m_secretKey(secretKey), m_dThresholdValue(80.1)	//默认人脸比对80分以上通过
 {
+	//实例化网络管理对象
+	detectManager = new QNetworkAccessManager(this);
+	//网络管理对象信号和槽
+	connect(detectManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyDetectFinished(QNetworkReply*)));
 }
 
 /************************************
@@ -117,7 +123,7 @@ int FaceRecognition_Qt::IdentifyFace(QString qstrImage)
 *@Created:   2020/12/04 15:00
 *@Describe:	 颜值评分
 *************************************/
-int FaceRecognition_Qt::DetectFace(QString qstrImage)
+void FaceRecognition_Qt::DetectFace(QString qstrImage)
 {
 #pragma region 地址拼接_不自动获取Token
 	//QString requestUrl = "https://aip.baidubce.com/rest/2.0/face/v3/detect";
@@ -129,10 +135,106 @@ int FaceRecognition_Qt::DetectFace(QString qstrImage)
 	QUrl url("https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token=" + m_token);
 	//创建请求对象
 	QNetworkRequest request(url);
+	//设置数据提交格式，这个不能自己随便写，每个平台的格式可能不一样，百度AI要求的格式为application/json
+	request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+	QJsonObject obj;
+	QJsonDocument doc;
+
+	obj.insert("image", qstrImage);
+	obj.insert("image_type", "BASE64");
+	obj.insert("face_field", "age,beauty,gender,expression,quality");
+	obj.insert("max_face_num", 10);
+	doc.setObject(obj);
+
+	QByteArray postParam = doc.toJson(QJsonDocument::Compact);
+	detectManager->post(request, postParam);
 }
 
 FaceRecognition_Qt::~FaceRecognition_Qt()
 {
+}
+
+/************************************
+*@Method:    jsonDetectDataParser
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Parameter: QByteArray replyData
+*@Created:   2020/12/04 15:36
+*@Describe:	 Json解析
+*************************************/
+void FaceRecognition_Qt::jsonDetectDataParser(QByteArray &replyData)
+{
+	QJsonParseError err;
+	toShowInfo.clear();
+	QJsonDocument doc = QJsonDocument::fromJson(replyData, &err);
+	if (err.error == QJsonParseError::NoError) {
+		if (doc.isObject()) {
+			QJsonObject obj = doc.object();
+			//解析反馈的人脸属性结果
+			if (obj.contains("result")) {
+				QJsonObject resultObj = obj.take("result").toObject();
+				//解析人脸个数
+				if (resultObj.contains("face_num")) {
+					int faceNum = resultObj.take("face_num").toInt();
+					qDebug() << "查询到了图片中的人脸个数为：" << faceNum;
+				}
+				//解析人脸属性
+				if (resultObj.contains("face_list")) {
+					QJsonArray faceArray = resultObj.take("face_list").toArray();
+					for (int i = 0; i < faceArray.size(); i++) {
+						QJsonObject faceObj = faceArray.at(i).toObject();
+
+						// 解析性别
+						if (faceObj.contains("gender")) {
+							QJsonObject genderObj = faceObj.take("gender").toObject();
+							if (genderObj.contains("type")) {
+								QString type = genderObj.take("type").toString();
+								if (type == "male") {
+									toShowInfo += "性别：男\r\n";
+								}
+								else {
+									toShowInfo += "性别：女\r\n";
+								}
+							}
+						}
+
+						// 解析年龄
+						if (faceObj.contains("age")) {
+							int age = faceObj.take("age").toDouble();
+							toShowInfo += "年龄：" + QString("%1").arg(age) + "\r\n";
+						}
+
+						// 解析颜值
+						if (faceObj.contains("beauty")) {
+							int beauty = faceObj.take("beauty").toDouble();
+							toShowInfo += "颜值：" + QString("%1").arg(beauty) + "\r\n";
+						}
+
+						// 解析表情
+						if (faceObj.contains("expression")) {
+							QJsonObject expressionObj = faceObj.take("expression").toObject();
+							if (expressionObj.contains("type")) {
+								QString type = expressionObj.take("type").toString();
+								if (type == "smile") {
+									toShowInfo += "表情：微笑\r\n";
+								}
+								else if (type == "laugh") {
+									toShowInfo += "表情：大笑\r\n";
+								}
+								else {
+									toShowInfo += "表情：不笑\r\n";
+								}
+							}
+						}
+						toShowInfo += "\r\n================\r\n";
+					}
+				}
+			}
+		}
+	}
+	qDebug() << "toShowInfo:" << toShowInfo;
+	emit(CanShowResult());
 }
 
 /************************************
@@ -160,4 +262,25 @@ bool FaceRecognition_Qt::refreshToken(void)
 
 	m_token = data["access_token"].toString();
 	return true;
+}
+
+/************************************
+*@Method:    replyDetectFinished
+*@Access:    public
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Parameter: QNetworkReply * reply
+*@Created:   2020/12/04 15:34
+*@Describe:	 detect响应结束槽函数
+*************************************/
+void FaceRecognition_Qt::replyDetectFinished(QNetworkReply *reply)
+{
+	qDebug() << "replyDetectFinished IN";
+	//读取网络反馈响应的信息
+	QByteArray replyData = reply->readAll();
+	reply->close();
+	qDebug() << "reply data is:" << QString(replyData);
+	//json解码
+	jsonDetectDataParser(replyData);
+	qDebug() << "replyDetectFinished OUT";
 }

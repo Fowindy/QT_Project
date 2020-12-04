@@ -11,6 +11,7 @@
 #include <QThread>
 #include <QObject>
 #include <QFileDialog>
+extern QString toShowInfo;
 static int temp = 0;
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -456,7 +457,21 @@ void MainWindow::on_btnDetect_clicked()
 	QString qstrImg = QString(ba.toBase64());
 	qDebug() << "base64 len:" << qstrImg.length();
 	buffer.close();
-	postDetectData(qstrImg);
+	m_Face->DetectFace(qstrImg);
 	qDebug() << "on_btn_detect_clicked OUT";
+	connect(m_Face, SIGNAL(CanShowResult()), this, SLOT(showDetectResult()));
+}
+
+/************************************
+*@Method:    showDetectResult
+*@Access:    private
+*@Returns:   void
+*@Author: 	  Fowindy
+*@Created:   2020/12/04 17:03
+*@Describe:	 显示检测结果的槽函数
+*************************************/
+void MainWindow::showDetectResult()
+{
+	ui->textBrowser->setText(toShowInfo);
 }
 

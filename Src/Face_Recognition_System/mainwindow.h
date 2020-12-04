@@ -53,6 +53,7 @@ private slots:
 	void timerUpdate(void);	//更新时间
 	void on_btnChooseImageDetect_clicked();	//颜值评分界面选择图片
 	void on_btnDetect_clicked();	//人脸检测按钮
+	void showDetectResult();
 signals:
 	void sendId(QString);
 };
